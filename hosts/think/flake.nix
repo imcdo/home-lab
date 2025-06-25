@@ -8,7 +8,7 @@
   };
   outputs = { self, nixpkgs, comin }: {
     nixosConfigurations = {
-      myMachine = nixpkgs.lib.nixosSystem {
+      think = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           comin.nixosModules.comin
