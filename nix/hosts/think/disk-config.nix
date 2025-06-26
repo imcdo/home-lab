@@ -1,19 +1,37 @@
 { config, lib, pkgs, ... }:
 {
-  disko.devices.disk = {
-    main = {
-      device = "/dev/sda";
-      layout = {
-        "/boot" = {
-            fsType = "vfat";
-            size = "512M";
-            label = "NIXBOOT";
-
-        };
-        "/" = {
-            fsType = "ext4";
-            size = "100%";
-            label = "NIXROOT";
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [
+                  "defaults"
+                ];
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+                mountOptions = [
+                  "defaults"
+                ];
+              };
+            };
+          };
         };
       };
     };
