@@ -12,7 +12,7 @@
     };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
-  outputs = inputs@{ self, nixpkgs, comin, vscode-server, disko }:
+  outputs = inputs@{ self, nixpkgs, comin, vscode-server, disko, ... }:
   let
     lib = nixpkgs.lib;
   in {
