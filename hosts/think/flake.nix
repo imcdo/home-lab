@@ -18,10 +18,10 @@
               enable = true;
               remotes = [{
                 name = "origin";
-                url = "https://gitlab.com/imcdo/home-lab.git";
+                url = "https://github.com/imcdo/home-lab.git";
                 branches.main.name = "main";
               }];
-              flakeSubdirectory = "hosts/think";
+              flakeSubdirectory = "./hosts/think";
             };
           })
           vscode-server.nixosModules.default

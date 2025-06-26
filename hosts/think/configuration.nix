@@ -108,7 +108,6 @@
     role = "server";
     token = "iansk3sclustertoken";
     clusterInit = true;
-
   };
   networking.hostName = "think";
   # Or disable the firewall altogether.
