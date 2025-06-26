@@ -38,6 +38,7 @@
   };
   users.groups.k3s = { };
   users.groups.nix = { };
+  users.groups.nix-admins = { };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -46,6 +47,7 @@
     extraGroups = [
       "wheel"
       "nix"
+      "nix-admins"
       "k3s"
       "docker"
     ];
@@ -78,6 +80,11 @@
     description = "K3s System User";
     shell = "/sbin/nologin";
   };
+
+  system.activationScripts.fixNixosPermissions.text = ''
+    chown -R root:nixos-admins /etc/nixos
+    chmod -R g+rwX /etc/nixos
+  '';
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
