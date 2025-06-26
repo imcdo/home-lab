@@ -8,7 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "web"
 spec:
   rules:
-    - host: dashboard.k3s.lan  # adjust this to your local DNS or /etc/hosts
+    - host: k8s-dashboard.k3s.lan  # adjust this to your local DNS or /etc/hosts
       http:
         paths:
           - path: /
