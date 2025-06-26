@@ -1,13 +1,21 @@
 {
   inputs = {
     nixpkgs.url = "github:nixOS/nixpkgs";
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     comin = {
       url = "github:nlewo/comin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
-  outputs = { self, nixpkgs, comin, vscode-server }: {
+  outputs = inputs@{ self, nixpkgs, comin, vscode-server, disko }:
+  let
+    lib = nixpkgs.lib;
+  in {
     nixosConfigurations = {
       think = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -21,15 +29,17 @@
                 url = "https://github.com/imcdo/home-lab.git";
                 branches.main.name = "main";
               }];
-              flakeSubdirectory = "./hosts/think";
+              flakeSubdirectory = "./nix";
             };
           })
           vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
           })
-          ./configuration.nix
-          ../modules/flux-bootstrap.nix
+          ./hosts/myhost/disk-config.nix
+          ./hosts/myhost/hardware-configuration.nix
+          ./hosts/myhost/configuration.nix
+          ./modules/flux-bootstrap.nix
         ];
       };
     };
