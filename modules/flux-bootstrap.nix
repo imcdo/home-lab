@@ -23,7 +23,7 @@ with lib;
 
     path = mkOption {
       type = types.str;
-      default = "clusters/nixos-k3s";
+      default = "clusters/home-k3s";
       description = "Path in the Git repo where manifests live.";
     };
 

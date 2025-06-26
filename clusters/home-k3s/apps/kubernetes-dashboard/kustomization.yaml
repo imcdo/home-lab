@@ -1,0 +1,4 @@
+resources:
+  - dashboard.yaml
+  - admin-user.yaml
+  - ingress.yaml 
