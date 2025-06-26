@@ -85,15 +85,20 @@
   system.activationScripts.fixNixosPermissions.text = ''
     chown -R root:nix-admins /etc/nixos
     chmod -R g+rwX /etc/nixos
-  '';
-  # List packages installed in system profile.
+  '';  # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     fluxcd
     git # Required for comin and other git operations
+    kubectl # Kubernetes CLI
   ];
+
+  # Set KUBECONFIG environment variable for all users
+  environment.variables = {
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+  };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     22 # SSH
@@ -103,13 +108,15 @@
   ];
   networking.firewall.allowedUDPPorts = [
     8472 # k3s, flannel: required if using multi-node for inter-node networking
-  ];
-
-  services.k3s = { 
+  ];  services.k3s = { 
     enable = true;
     role = "server";
     token = "iansk3sclustertoken";
     clusterInit = true;
+    extraFlags = toString [
+      "--write-kubeconfig-mode=640"
+      "--write-kubeconfig-group=k3s"
+    ];
   };
   networking.hostName = "think";
   # Or disable the firewall altogether.
