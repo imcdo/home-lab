@@ -64,6 +64,7 @@
     extraGroups = [
       "wheel"
       "nix"
+      "nix-admins"
       "k3s"
       "docker"
     ];
@@ -82,7 +83,7 @@
   };
 
   system.activationScripts.fixNixosPermissions.text = ''
-    chown -R root:nixos-admins /etc/nixos
+    chown -R root:nix-admins /etc/nixos
     chmod -R g+rwX /etc/nixos
   '';
 
