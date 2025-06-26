@@ -18,6 +18,14 @@
                 mountOptions = [
                   "defaults"
                 ];
+                label = "NIXBOOT";
+              };
+            };
+            swap = {
+              size = "2G";
+              content = {
+                type = "swap";
+                label = "NIXSWAP";
               };
             };
             root = {
@@ -29,6 +37,7 @@
                 mountOptions = [
                   "defaults"
                 ];
+                label = "NIXROOT";
               };
             };
           };
