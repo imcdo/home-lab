@@ -86,13 +86,13 @@
     chown -R root:nix-admins /etc/nixos
     chmod -R g+rwX /etc/nixos
   '';
-
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     fluxcd
+    git # Required for comin and other git operations
   ];
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [

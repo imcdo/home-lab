@@ -36,9 +36,9 @@
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
           })
-          ./hosts/myhost/disk-config.nix
-          ./hosts/myhost/hardware-configuration.nix
-          ./hosts/myhost/configuration.nix
+          ./hosts/think/disk-config.nix
+          ./hosts/think/hardware-configuration.nix
+          ./hosts/think/configuration.nix
           ./modules/flux-bootstrap.nix
         ];
       };
