@@ -29,6 +29,7 @@
             services.vscode-server.enable = true;
           })
           ./configuration.nix
+          ../modules/flux-bootstrap.nix
         ];
       };
     };
