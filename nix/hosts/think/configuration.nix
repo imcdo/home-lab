@@ -10,9 +10,18 @@
     ./hardware-configuration.nix
   ];
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.device = "/dev/sda";
+  # boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub.device = "nodev";
+  # boot.loader.grub.efiSupport = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+    };
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 100;
+    };
+  };
   # Pick only one of the below networking options.
   networking.wireless = {
     enable = true;
@@ -119,6 +128,7 @@
     ];
   };
   networking.hostName = "think";
+  swapDevices = [ { device = "/swap/swapfile"; } ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

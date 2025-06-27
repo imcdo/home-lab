@@ -11,21 +11,19 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];  # Override disko filesystem definitions to use filesystem labels
-  fileSystems."/" = lib.mkForce {
-    device = "/dev/disk/by-label/NIXROOT";
-    fsType = "ext4";
-  };
+  boot.extraModulePackages = [ ];
+  # Filesystem configurations are managed by disko
+  # Commented out to avoid conflicts with disko module
+  # fileSystems."/" =
+  #   { device = "/dev/disk/by-label/NIXROOT";
+  #     fsType = "ext4";
+  #   };
 
-  fileSystems."/boot" = lib.mkForce {
-    device = "/dev/disk/by-label/NIXBOOT";
-    fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
-  };
-
-  swapDevices = lib.mkForce [
-    { device = "/dev/disk/by-label/NIXSWAP"; }
-  ];
+  # fileSystems."/boot" =
+  #   { device = "/dev/disk/by-label/NIXBOOT";
+  #     fsType = "vfat";
+  #     options = [ "fmask=0022" "dmask=0022" ];
+  #   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
