@@ -28,6 +28,12 @@
                 mountpoint = "/";
               };
             };
+            swap = {
+              size = "2G";
+              content = {
+                type = "swap";
+              };
+            };
           };
         };
       };
