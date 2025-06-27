@@ -9,6 +9,7 @@
           type = "gpt";
           partitions = {
             boot = {
+              name = "boot";
               size = "512M";
               type = "EF00";
               content = {
@@ -18,17 +19,17 @@
                 mountOptions = [
                   "defaults"
                 ];
-                extraArgs = [ "-n" "NIXBOOT" ];
               };
             };
             swap = {
+              name = "swap";
               size = "2G";
               content = {
                 type = "swap";
-                extraArgs = [ "-L" "NIXSWAP" ];
               };
             };
             root = {
+              name = "root";
               size = "100%";
               content = {
                 type = "filesystem";
@@ -37,7 +38,6 @@
                 mountOptions = [
                   "defaults"
                 ];
-                extraArgs = [ "-L" "NIXROOT" ];
               };
             };
           };
@@ -45,6 +45,4 @@
       };
     };
   };
-  
-  boot.initrd.systemd.enable = true;
 }
