@@ -43,6 +43,11 @@
 
     openssh = {
       enable = true;
+      settings = {
+        PermitRootLogin = "prohibit-password";
+        PasswordAuthentication = false;
+        PubkeyAuthentication = true;
+      };
     };
   };
   users.groups.k3s = { };
