@@ -36,13 +36,12 @@ with lib;
 
   config = mkIf config.services.flux-bootstrap.enable {
     environment.systemPackages = with pkgs; [ fluxcd kubectl git openssh ];
-
     environment.etc."flux/bootstrap.sh".text = ''
       #!/bin/sh
       set -e
-      if ! ${kubectl}/bin/kubectl get ns flux-system >/dev/null 2>&1; then
+      if ! ${pkgs.kubectl}/bin/kubectl get ns flux-system >/dev/null 2>&1; then
         echo "Flux not found in cluster, bootstrapping..."
-        flux bootstrap github \
+        ${pkgs.fluxcd}/bin/flux bootstrap github \
           --owner=${config.services.flux-bootstrap.githubOwner} \
           --repository=${config.services.flux-bootstrap.githubRepo} \
           --branch=${config.services.flux-bootstrap.branch} \
