@@ -56,6 +56,18 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  security.sudo.extraRules = [
+    {
+      users = [ "ian" ];
+      commands = [
+        {
+          command = "ALL" ;
+          options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
+        }
+      ];
+    }
+  ];
+
   users.users.root = {
     isNormalUser = false;
     description = "Root User";
