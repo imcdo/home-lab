@@ -35,7 +35,6 @@
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
-
   services = {
     xserver = {
       xkb.layout = "us";
@@ -48,6 +47,10 @@
         PasswordAuthentication = false;
         PubkeyAuthentication = true;
       };
+    };
+
+    flux-bootstrap = {
+      enable = true;
     };
   };
   users.groups.k3s = { };
@@ -155,9 +158,7 @@
       "--write-kubeconfig-mode=640"
       "--write-kubeconfig-group=k3s"
     ];
-  };
-  networking.hostName = "think";
-  swapDevices = [ { device = "/swap/swapfile"; } ];
+  };  networking.hostName = "think";
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
