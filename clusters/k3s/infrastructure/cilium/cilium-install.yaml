@@ -38,11 +38,7 @@ spec:
     routingMode: "tunnel"
     tunnelProtocol: "vxlan"
     
-    # Use a different VXLAN device name to avoid conflicts
-    vxlan:
-      device: "cilium_vxlan2"
-    
-    # Clean slate configuration
+    # Enable clean state to rewmove old devices and start fresh
     cleanState: true
     
     hubble:
