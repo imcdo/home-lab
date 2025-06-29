@@ -40,6 +40,8 @@
           ./hosts/think/disk-config.nix
           ./hosts/think/hardware-configuration.nix
           ./hosts/think/configuration.nix
+          ./modules/k3s.nix
+          ./modules/users.nix
         ];
       };
     };
