@@ -82,6 +82,7 @@
       "k3s"
       "docker"
       "kubernetes-helm"
+      "helm"
     ];
     description = "Ian";
     shell = pkgs.bash;
