@@ -142,11 +142,22 @@
     2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
     2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
     4240 # Cilium health checks
+    4245 # Hubble relay
+    4222 # Hubble health server
   ];
   networking.firewall.allowedUDPPorts = [
     8472 # k3s, flannel: required if using multi-node for inter-node networking (keeping for compatibility)
     4789 # Cilium VXLAN
-  ];services.k3s = { 
+    53 # Cilium DNS
+  ];
+  networking.firewall.trustedInterfaces = [
+    "cilium_host"
+    "cilium_net"
+    "cilium_vxlan"
+    "cilium_geneve"
+  ];
+
+  services.k3s = { 
     enable = true;
     role = "server";
     token = "iansk3sclustertoken";
