@@ -81,8 +81,6 @@
       "nix-admins"
       "k3s"
       "docker"
-      "kubernetes-helm"
-      "helm"
     ];
     description = "Ian";
     shell = pkgs.bash;
@@ -131,6 +129,7 @@
     git # Required for comin and other git operations
     kubectl # Kubernetes CLI
     cilium-cli # Cilium CLI for managing Cilium CNI
+    kubernetes-helm # Helm package manager for Kubernetes
   ];
 
   # Set KUBECONFIG environment variable for all users
