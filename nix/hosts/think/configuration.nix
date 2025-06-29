@@ -48,10 +48,6 @@
         PubkeyAuthentication = true;
       };
     };
-
-    flux-bootstrap = {
-      enable = true;
-    };
   };
   users.groups.k3s = { };
   users.groups.nix = { };
@@ -121,12 +117,10 @@
     createHome = true;
     description = "K3s System User";
     shell = "/sbin/nologin";
-  };
-
-  system.activationScripts.fixNixosPermissions.text = ''
+  };  system.activationScripts.fixNixosPermissions.text = ''
     chown -R root:nix-admins /etc/nixos
     chmod -R g+rwX /etc/nixos
-  '';  # List packages installed in system profile.
+  '';# List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -134,22 +128,24 @@
     fluxcd
     git # Required for comin and other git operations
     kubectl # Kubernetes CLI
+    cilium-cli # Cilium CLI for managing Cilium CNI
   ];
 
   # Set KUBECONFIG environment variable for all users
   environment.variables = {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
-  };
-  # Open ports in the firewall.
+  };  # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     22 # SSH
     6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
     2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
     2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
+    4240 # Cilium health checks
   ];
   networking.firewall.allowedUDPPorts = [
-    8472 # k3s, flannel: required if using multi-node for inter-node networking
-  ];  services.k3s = { 
+    8472 # k3s, flannel: required if using multi-node for inter-node networking (keeping for compatibility)
+    4789 # Cilium VXLAN
+  ];services.k3s = { 
     enable = true;
     role = "server";
     token = "iansk3sclustertoken";
@@ -157,8 +153,13 @@
     extraFlags = toString [
       "--write-kubeconfig-mode=640"
       "--write-kubeconfig-group=k3s"
+      "--flannel-backend=none"
+      "--disable-network-policy"
+      "--cluster-cidr=10.42.0.0/16"
+      "--service-cidr=10.43.0.0/16"
     ];
-  };  networking.hostName = "think";
+  };
+  networking.hostName = "think";
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

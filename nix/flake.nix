@@ -40,7 +40,6 @@
           ./hosts/think/disk-config.nix
           ./hosts/think/hardware-configuration.nix
           ./hosts/think/configuration.nix
-          ./modules/flux-bootstrap.nix
         ];
       };
     };
