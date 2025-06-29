@@ -81,6 +81,7 @@
       "nix-admins"
       "k3s"
       "docker"
+      "kubernetes-helm"
     ];
     description = "Ian";
     shell = pkgs.bash;
