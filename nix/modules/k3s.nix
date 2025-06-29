@@ -106,7 +106,7 @@ in
       token = cfg.token;
       role = "server";
       clusterInit = cfg.clusterInit;
-      serverAddr = cfg.serverAddr;
+      serverAddr = mkIf (cfg.serverAddr != null) cfg.serverAddr;
       extraFlags = toString [
         "--write-kubeconfig-mode=640"
         "--write-kubeconfig-group=k3s"
