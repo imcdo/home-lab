@@ -56,8 +56,9 @@
     k3s = {
       enable = true;
       role = "server";
-      clusterInit = true;
+      clusterInit = false;
       token = "iansk3sclustertoken";
+      serverAddr = "https://192.168.0.95:6443"; # IP of the main server node
     };
 
     # Users configuration
@@ -71,7 +72,7 @@
 
 
   # Set hostname
-  networking.hostName = "think";
+  networking.hostName = "chrome-b";
 
   # Packages now handled by homelab modules
   environment.systemPackages = with pkgs; [

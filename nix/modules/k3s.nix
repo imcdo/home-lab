@@ -33,12 +33,6 @@ in
       default = "homelab-k3s-token";
       description = "Cluster token for authentication";
     };
-
-    hostName = mkOption {
-      type = types.str;
-      default = config.networking.hostName;
-      description = "Hostname for this node";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -96,9 +90,6 @@ in
       "net.core.bpf_jit_enable" = 1;
       "net.core.bpf_jit_harden" = 0;
     };
-
-    # Set hostname
-    networking.hostName = cfg.hostName;
 
     # K3s service - simplified version of your current config
     services.k3s = {

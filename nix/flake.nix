@@ -44,6 +44,33 @@
           ./modules/users.nix
         ];
       };
+      chrome-b = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          comin.nixosModules.comin
+          ({...}: {
+            services.comin = {
+              enable = true;
+              remotes = [{
+                name = "origin";
+                url = "https://github.com/imcdo/home-lab.git";
+                branches.main.name = "main";
+              }];
+              flakeSubdirectory = "./nix";
+            };
+          })
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+          ./hosts/chrome-b/disk-config.nix
+          ./hosts/chrome-b/hardware-configuration.nix
+          ./hosts/chrome-b/configuration.nix
+          ./modules/k3s.nix
+          ./modules/users.nix
+        ];
+      };
     };
   };
 }
