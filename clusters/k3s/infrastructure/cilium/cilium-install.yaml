@@ -34,11 +34,6 @@ spec:
     
     ipam:
       mode: "kubernetes"
-    
-    routingMode: "tunnel"
-    tunnelProtocol: "vxlan"
-    
-    # Enable clean state to rewmove old devices and start fresh
     cleanState: true
     
     hubble:
