@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - cilium-values.yaml
   - cilium-install.yaml
