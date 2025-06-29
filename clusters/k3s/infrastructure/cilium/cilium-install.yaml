@@ -27,7 +27,7 @@ spec:
     k8sServiceHost: "127.0.0.1"
     k8sServicePort: "6443"
     
-    kubeProxyReplacement: "strict"
+    kubeProxyReplacement: "true"
     
     operator:
       replicas: 1
@@ -35,7 +35,8 @@ spec:
     ipam:
       mode: "kubernetes"
     
-    tunnel: "vxlan"
+    routingMode: "tunnel"
+    tunnelProtocol: "vxlan"
     
     hubble:
       enabled: true
