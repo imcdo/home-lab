@@ -31,9 +31,12 @@ spec:
     
     operator:
       replicas: 1
-    
     ipam:
       mode: "kubernetes"
+    
+    routingMode: "tunnel"
+    tunnelProtocol: "geneve"
+    
     cleanState: true
     
     hubble:

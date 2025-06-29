@@ -158,9 +158,6 @@
       "--disable-network-policy"
       "--cluster-cidr=10.42.0.0/16"
       "--service-cidr=10.43.0.0/16"
-      # # Ensure CNI directory exists
-      # "--cni-conf-dir=/var/lib/rancher/k3s/agent/etc/cni/net.d"
-      # "--cni-bin-dir=/var/lib/rancher/k3s/data/current/bin"
     ];
   };
 
@@ -174,21 +171,6 @@
     # BPF settings for Cilium
     "net.core.bpf_jit_enable" = 1;
     "net.core.bpf_jit_harden" = 0;
-  };
-
-  # Ensure CNI directories exist
-  # system.activationScripts.createCniDirs = {
-  #   text = ''
-  #     mkdir -p /var/lib/rancher/k3s/agent/etc/cni/net.d
-  #     mkdir -p /var/lib/rancher/k3s/data/current/bin
-  #     mkdir -p /var/run/cilium
-  #     mkdir -p /var/lib/cilium
-      
-  #     # Clean up any stale BPF state on boot
-  #     rm -rf /var/lib/cilium/bpf/* 2>/dev/null || true
-  #     rm -rf /var/run/cilium/state/* 2>/dev/null || true
-  #   '';
-    deps = [ "users" ];
   };
 
   networking.hostName = "think";
