@@ -51,6 +51,7 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
+      user = "ian";
     };
   };
 
