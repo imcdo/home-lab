@@ -48,7 +48,12 @@
         PubkeyAuthentication = true;
       };
     };
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
   };
+
 
   # Homelab modules configuration
   services.homelab = {
@@ -78,6 +83,9 @@
     vim # Editor
     wget
     git # Required for GitOps workflows
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
   ];
 
   # Networking hostname is now handled by the k3s module

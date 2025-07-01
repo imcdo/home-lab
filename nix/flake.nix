@@ -25,6 +25,7 @@
           ({...}: {
             services.comin = {
               enable = true;
+              hostname = "think";
               remotes = [{
                 name = "origin";
                 url = "https://github.com/imcdo/home-lab.git";
@@ -52,6 +53,7 @@
           ({...}: {
             services.comin = {
               enable = true;
+              hostname = "chrome-b";
               remotes = [{
                 name = "origin";
                 url = "https://github.com/imcdo/home-lab.git";
