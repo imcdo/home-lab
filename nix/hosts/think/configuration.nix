@@ -51,10 +51,9 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
-      user = "ian";
     };
   };
-
+  users.users.ian.extraGroups = [ "jellyfin" ]
 
   # Homelab modules configuration
   services.homelab = {
