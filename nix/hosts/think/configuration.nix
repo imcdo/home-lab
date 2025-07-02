@@ -85,6 +85,10 @@
   # Set hostname
   networking.hostName = "think";
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "zerotierone"
+  ];
+
   # Packages now handled by homelab modules
   environment.systemPackages = with pkgs; [
     vim # Editor
