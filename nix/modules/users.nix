@@ -76,6 +76,22 @@ in
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
     };
 
+    users.users.christian =  {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "nix"
+        "nix-admins"
+        "k3s"
+        "docker"
+      ];
+      description = "Christian";
+      shell = pkgs.bash;
+      home = "/home/christian";
+      packages = cfg.mainUser.packages;
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsfRmT8vQ+SWFgtHW4P43QV0rmtd9yNmiEINBoGtdd5 christianjmacneill@gmail.com" ];
+    };
+
     # Admin user
     users.users.nixadmin = mkIf cfg.nixAdmin.enable {
       isNormalUser = true;
