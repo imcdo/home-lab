@@ -33,6 +33,13 @@
     };
   };
 
+  services.zerotierone = {
+  enable = true;
+  joinNetworks = [
+      "0cccb752f74b06e5"
+    ];
+  };
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
   services = {
