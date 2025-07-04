@@ -30,7 +30,7 @@ in
           kubectl
           k9s
           python313Full
-
+          protonvpn-cli_2
         ] ++ (with pkgs.python313Packages; [
           pip
           virtualenv
