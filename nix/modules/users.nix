@@ -24,7 +24,19 @@ in
 
       packages = mkOption {
         type = types.listOf types.package;
-        default = with pkgs; [ wget fluxcd kubectl k9s python314Full ];
+        default = with pkgs; [
+          wget
+          fluxcd
+          kubectl
+          k9s
+          python313Full
+
+        ] ++ (with pkgs.python313Packages [
+          pip
+          virtualenv
+          pipx
+          requests
+        ]);
         description = "Additional packages for the main user";
       };
     };
