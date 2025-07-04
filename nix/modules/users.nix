@@ -31,7 +31,7 @@ in
           k9s
           python313Full
 
-        ] ++ (with pkgs.python313Packages [
+        ] ++ (with pkgs.python313Packages; [
           pip
           virtualenv
           pipx
