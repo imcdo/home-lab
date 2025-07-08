@@ -35,8 +35,14 @@ in
     };
   };
 
-
   config = mkIf cfg.enable {
+    # Age secrets configuration
+    age.secrets.k3sToken = {
+      file = ../secrets/k3s-token.age;
+      owner = "k3s";
+      group = "k3s";
+    };
+
     # Install packages
     environment.systemPackages = with pkgs; [
       kubectl
@@ -44,12 +50,6 @@ in
       cilium-cli
       fluxcd
     ];
-
-      age.secrets.k3sToken = {
-        file = "../secrets/k3s-token.age";
-        user = "k3s";
-        group = "k3s";
-      };
 
     # Set KUBECONFIG
     environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
@@ -101,8 +101,8 @@ in
     # K3s service - simplified version of your current config
     services.k3s = {
       enable = true;
-      token = cfg.age.secrets.k3sToken.file;
-      role = "server";
+      tokenFile = config.age.secrets.k3sToken.path;
+      role = cfg.role;
       clusterInit = cfg.clusterInit;
       serverAddr = mkIf (cfg.serverAddr != null) cfg.serverAddr;
       extraFlags = toString [
