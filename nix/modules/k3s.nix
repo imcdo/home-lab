@@ -87,7 +87,12 @@ in
     };
 
     # BPF support for Cilium
-    boot.kernelModules = [ "bpf" ];
+    boot.kernelModules = [
+        "bpf"
+        "br_netfilter"
+        "overlay"
+        "ip_tables"
+    ];
     boot.kernel.sysctl = {
       "net.ipv4.ip_forward" = 1;
       "net.ipv6.conf.all.forwarding" = 1;
