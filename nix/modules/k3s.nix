@@ -64,27 +64,30 @@ in
 
     # Firewall
     networking.firewall = {
-      allowedTCPPorts = [
-        22    # SSH
-        6443  # k3s API
-        2379  # etcd client
-        2380  # etcd peer
-        4240  # Cilium health
-        4245  # Hubble relay
-        4222  # Hubble health
-      ];
-      allowedUDPPorts = [
-        53    # DNS
-        8472  # Flannel VXLAN
-        4789  # Cilium VXLAN
-        6081  # Cilium Geneve
-      ];
-      trustedInterfaces = [
-        "cilium_host"
-        "cilium_net"
-        "cilium_vxlan"
-        "cilium_geneve"
-      ];
+        enable = false;
+    #   allowedTCPPorts = [
+    #     22    # SSH
+    #     6443  # k3s API
+    #     2379  # etcd client
+    #     2380  # etcd peer
+    #     4240  # Cilium health
+    #     4245  # Hubble relay
+    #     4222  # Hubble health
+    #     9522  # Cilium Geneve
+    #   ];
+    #   allowedUDPPorts = [
+    #     53    # DNS
+    #     8472  # Flannel VXLAN
+    #     4789  # Cilium VXLAN
+    #     6081  # Cilium Geneve
+    #     9522  # Cilium Geneve
+    #   ];
+    #   trustedInterfaces = [
+    #     "cilium_host"
+    #     "cilium_net"
+    #     "cilium_vxlan"
+    #     "cilium_geneve"
+    #   ];
     };
 
     # BPF support for Cilium
