@@ -77,6 +77,7 @@ in
         53    # DNS
         8472  # Flannel VXLAN
         4789  # Cilium VXLAN
+        6081  # Cilium Geneve
       ];
       trustedInterfaces = [
         "cilium_host"
@@ -92,6 +93,7 @@ in
         "br_netfilter"
         "overlay"
         "ip_tables"
+        
     ];
     boot.kernel.sysctl = {
       "net.ipv4.ip_forward" = 1;
