@@ -6,13 +6,6 @@ let
   cfg = config.services.homelab.k3s;
 in
 {
-  # Age secrets configuration
-  age.secrets.k3sToken = {
-      file = ../secrets/k3s-token.age;
-      owner = "k3s";
-      group = "k3s";
-  };
-
   options.services.homelab.k3s = {
     enable = mkEnableOption "Enable K3s Kubernetes cluster";
 
@@ -41,8 +34,14 @@ in
       description = "Cluster token for authentication";
     };
   };
-
   config = mkIf cfg.enable {
+    # Age secrets configuration
+    age.secrets.k3sToken = {
+      file = ../secrets/k3s-token.age;
+      owner = "k3s";
+      group = "k3s";
+    };
+
     # Install packages
     environment.systemPackages = with pkgs; [
       kubectl
