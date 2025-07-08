@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, age, ... }:
 
 with lib;
 
@@ -35,6 +35,7 @@ in
     };
   };
 
+
   config = mkIf cfg.enable {
     # Install packages
     environment.systemPackages = with pkgs; [
@@ -43,6 +44,12 @@ in
       cilium-cli
       fluxcd
     ];
+
+      age.secrets.k3sToken = {
+        file = "../secrets/k3s-token.age";
+        user = "k3s";
+        group = "k3s";
+      };
 
     # Set KUBECONFIG
     environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
@@ -94,7 +101,7 @@ in
     # K3s service - simplified version of your current config
     services.k3s = {
       enable = true;
-      token = cfg.token;
+      token = cfg.age.secrets.k3sToken.file;
       role = "server";
       clusterInit = cfg.clusterInit;
       serverAddr = mkIf (cfg.serverAddr != null) cfg.serverAddr;
