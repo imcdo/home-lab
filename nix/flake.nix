@@ -26,6 +26,7 @@
         modules = [
           disko.nixosModules.disko
           comin.nixosModules.comin
+          agenix.nixosModules.default
           ({...}: {
             services.comin = {
               enable = true;
@@ -54,6 +55,7 @@
         modules = [
           disko.nixosModules.disko
           comin.nixosModules.comin
+          agenix.nixosModules.default
           ({...}: {
             services.comin = {
               enable = true;
