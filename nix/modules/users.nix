@@ -30,7 +30,9 @@ in
           kubectl
           k9s
           python313Full
-          protonvpn-cli
+          btop
+          unixtools
+          python313Packages.uptime
         ] ++ (with pkgs.python313Packages; [
           pip
           virtualenv
