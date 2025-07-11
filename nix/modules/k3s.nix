@@ -65,21 +65,28 @@ in
     # Firewall
     networking.firewall = {
       enable = true;
+      # Enable logging for dropped packets to help debug issues
+      logRefusedConnections = true;
+      logRefusedPackets = true;
       allowedTCPPorts = [
         22    # SSH
         6443  # k3s API
         2379  # etcd client
         2380  # etcd peer
         4240  # Cilium health
+        4243  # Cilium health
+        4244  # Cilium health
         4245  # Hubble relay
         4222  # Hubble health
         9522  # Cilium Geneve
+        9963
       ];
       allowedUDPPorts = [
         53    # DNS
-        # 8472  # Flannel VXLAN
+        68    # DHCP
+        8472  # Flannel VXLAN
         # 4789  # Cilium VXLAN
-        # 6081  # Cilium Geneve
+        6081  # Cilium Geneve
         # 9522  # Cilium Geneve
       ];
     #   trustedInterfaces = [
