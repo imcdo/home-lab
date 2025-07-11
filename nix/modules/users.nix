@@ -31,7 +31,6 @@ in
           k9s
           python313Full
           btop
-          unixtools
           iptables
           python313Packages.uptime
         ] ++ (with pkgs.python313Packages; [
