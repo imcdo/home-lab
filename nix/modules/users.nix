@@ -33,7 +33,7 @@ in
           btop
           iptables
           unixtools.nettools
-          unixtools.Ping
+          unixtools.ping
           unixtools.netstat
           python313Packages.uptime
         ] ++ (with pkgs.python313Packages; [
