@@ -65,45 +65,45 @@ in
     # Firewall
     networking.firewall = {
         enable = false;
-    #   allowedTCPPorts = [
-    #     22    # SSH
-    #     6443  # k3s API
-    #     2379  # etcd client
-    #     2380  # etcd peer
-    #     4240  # Cilium health
-    #     4245  # Hubble relay
-    #     4222  # Hubble health
-    #     9522  # Cilium Geneve
-    #   ];
-    #   allowedUDPPorts = [
-    #     53    # DNS
-    #     8472  # Flannel VXLAN
-    #     4789  # Cilium VXLAN
-    #     6081  # Cilium Geneve
-    #     9522  # Cilium Geneve
-    #   ];
-    #   trustedInterfaces = [
-    #     "cilium_host"
-    #     "cilium_net"
-    #     "cilium_vxlan"
-    #     "cilium_geneve"
-    #   ];
+      allowedTCPPorts = [
+        22    # SSH
+        6443  # k3s API
+        2379  # etcd client
+        2380  # etcd peer
+        4240  # Cilium health
+        4245  # Hubble relay
+        4222  # Hubble health
+        9522  # Cilium Geneve
+      ];
+      allowedUDPPorts = [
+        53    # DNS
+        8472  # Flannel VXLAN
+        4789  # Cilium VXLAN
+        6081  # Cilium Geneve
+        9522  # Cilium Geneve
+      ];
+      trustedInterfaces = [
+        "cilium_host"
+        "cilium_net"
+        "cilium_vxlan"
+        "cilium_geneve"
+      ];
     };
 
     # BPF support for Cilium
     boot.kernelModules = [
         "bpf"
-        "br_netfilter"
-        "overlay"
         "ip_tables"
+        # "br_netfilter"
+        # "overlay"
         
     ];
-    boot.kernel.sysctl = {
-      "net.ipv4.ip_forward" = 1;
-      "net.ipv6.conf.all.forwarding" = 1;
-      "net.core.bpf_jit_enable" = 1;
-      "net.core.bpf_jit_harden" = 0;
-    };
+    # boot.kernel.sysctl = {
+    #   "net.ipv4.ip_forward" = 1;
+    #   "net.ipv6.conf.all.forwarding" = 1;
+    #   "net.core.bpf_jit_enable" = 1;
+    #   "net.core.bpf_jit_harden" = 0;
+    # };
 
     # K3s service - simplified version of your current config
     services.k3s = {
