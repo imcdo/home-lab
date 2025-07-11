@@ -74,12 +74,13 @@ in
         2379  # etcd client
         2380  # etcd peer
         4240  # Cilium health
-        4243  # Cilium health
+        4243  # Comin
         4244  # Cilium health
         4245  # Hubble relay
         4222  # Hubble health
         9522  # Cilium Geneve
         9963
+        10250
       ];
       allowedUDPPorts = [
         53    # DNS
