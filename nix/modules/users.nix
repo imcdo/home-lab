@@ -32,6 +32,9 @@ in
           python313Full
           btop
           iptables
+          unixtools.nettools
+          unixtools.Ping
+          unixtools.netstat
           python313Packages.uptime
         ] ++ (with pkgs.python313Packages; [
           pip
