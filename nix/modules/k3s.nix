@@ -64,7 +64,7 @@ in
 
     # Firewall
     networking.firewall = {
-      enable = true;
+      enable = false;
       # Enable logging for dropped packets to help debug issues
       logRefusedConnections = true;
       logRefusedPackets = true;
