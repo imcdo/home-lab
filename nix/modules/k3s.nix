@@ -64,7 +64,7 @@ in
 
     # Firewall
     networking.firewall = {
-        enable = false;
+      enable = true;
       allowedTCPPorts = [
         22    # SSH
         6443  # k3s API
@@ -77,17 +77,17 @@ in
       ];
       allowedUDPPorts = [
         53    # DNS
-        8472  # Flannel VXLAN
-        4789  # Cilium VXLAN
-        6081  # Cilium Geneve
-        9522  # Cilium Geneve
+        # 8472  # Flannel VXLAN
+        # 4789  # Cilium VXLAN
+        # 6081  # Cilium Geneve
+        # 9522  # Cilium Geneve
       ];
-      trustedInterfaces = [
-        "cilium_host"
-        "cilium_net"
-        "cilium_vxlan"
-        "cilium_geneve"
-      ];
+    #   trustedInterfaces = [
+    #     "cilium_host"
+    #     "cilium_net"
+    #     "cilium_vxlan"
+    #     "cilium_geneve"
+    #   ];
     };
 
     # BPF support for Cilium
