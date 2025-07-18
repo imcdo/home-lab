@@ -57,7 +57,6 @@
       enable = true;
       role = "server";
       clusterInit = false;
-      token = "iansk3sclustertoken";
       serverAddr = "https://192.168.0.95:6443"; # IP of the think server node
     };
 

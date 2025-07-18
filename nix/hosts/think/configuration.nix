@@ -69,7 +69,6 @@
       enable = true;
       role = "server";
       clusterInit = true;
-      token = "iansk3sclustertoken";
     };
 
     # Users configuration

@@ -25,12 +25,6 @@ in
       example = "https://192.168.1.100:6443";
       description = "Address of existing server to join (required for additional nodes)";
     };
-
-    token = mkOption {
-      type = types.str;
-      default = "homelab-k3s-token";
-      description = "Cluster token for authentication";
-    };
   };
   config = mkIf cfg.enable {
     # Age secrets configuration
