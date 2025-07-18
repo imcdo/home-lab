@@ -32,6 +32,7 @@ in
           python313Full
           btop
           iptables
+          etcd
           unixtools.nettools
           unixtools.ping
           unixtools.netstat
