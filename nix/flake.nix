@@ -72,9 +72,9 @@
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
           })
-          ./hosts/chrome-b/disk-config.nix
-          ./hosts/chrome-b/hardware-configuration.nix
-          ./hosts/chrome-b/configuration.nix
+          ./hosts/chrome-a/disk-config.nix
+          ./hosts/chrome-a/hardware-configuration.nix
+          ./hosts/chrome-a/configuration.nix
           ./modules/k3s.nix
           ./modules/users.nix
         ];
