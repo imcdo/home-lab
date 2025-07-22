@@ -108,6 +108,35 @@
           ./modules/users.nix
         ];
       };
+      chrome-c = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          comin.nixosModules.comin
+          agenix.nixosModules.default
+          ({...}: {
+            services.comin = {
+              enable = true;
+              hostname = "chrome-c";
+              remotes = [{
+                name = "origin";
+                url = "https://github.com/imcdo/home-lab.git";
+                branches.main.name = "main";
+              }];
+              flakeSubdirectory = "./nix";
+            };
+          })
+          vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
+          ./hosts/chrome-c/disk-config.nix
+          ./hosts/chrome-c/hardware-configuration.nix
+          ./hosts/chrome-c/configuration.nix
+          ./modules/k3s.nix
+          ./modules/users.nix
+        ];
+      };
     };
   };
 }
