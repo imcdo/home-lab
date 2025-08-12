@@ -22,7 +22,7 @@ in
     serverAddr = mkOption {
       type = types.nullOr types.str;
       default = null;
-      example = "https://192.168.1.100:6443";
+      example = "https://192.168.2.100:6443";
       description = "Address of existing server to join (required for additional nodes)";
     };
   };

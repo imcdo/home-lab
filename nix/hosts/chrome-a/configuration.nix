@@ -70,7 +70,7 @@
       enable = true;
       role = "server";
       clusterInit = false;
-      serverAddr = "https://192.168.0.95:6443"; # IP of the think server node
+      serverAddr = "https://192.168.2.100:6443"; # IP of the think server node
     };
 
     # Users configuration
