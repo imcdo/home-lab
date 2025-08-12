@@ -35,7 +35,7 @@
     };
     interfaces.enp1s0.ipv4.addresses = [
       {
-        address = "192.168.2.102";
+        address = "192.168.0.102";
         prefixLength = 24;
       }
     ];
@@ -70,7 +70,7 @@
       enable = true;
       role = "server";
       clusterInit = false;
-      serverAddr = "https://192.168.2.100:6443"; # IP of the think server node
+      serverAddr = "https://192.168.0.100:6443"; # IP of the think server node
     };
 
     # Users configuration
