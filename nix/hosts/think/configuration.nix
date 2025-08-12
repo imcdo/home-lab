@@ -23,15 +23,28 @@
     };
   };
   # Pick only one of the below networking options.
-  networking.wireless = {
-    enable = true;
-    userControlled.enable = true;
-    networks = {
-      "The Pirate Ping" = {
-        psk = "thegumgumfruit";
+    networking = {
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      networks = {
+        "The Pirate Ping" = {
+          psk = "thegumgumfruit";
+        };
       };
     };
-  };
+    interfaces.eno1.ipv4.addresses = [
+      {
+        address = "192.168.2.100";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "192.168.0.1";
+    nameservers = [
+      "192.168.0.1",
+      "75.75.75.75",
+    ];
+  };  
 
   services.zerotierone = {
   enable = true;

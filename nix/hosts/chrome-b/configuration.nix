@@ -23,15 +23,28 @@
     };
   };
   # Pick only one of the below networking options.
-  networking.wireless = {
-    enable = true;
-    userControlled.enable = true;
-    networks = {
-      "The Pirate Ping" = {
-        psk = "thegumgumfruit";
+    networking = {
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      networks = {
+        "The Pirate Ping" = {
+          psk = "thegumgumfruit";
+        };
       };
     };
-  };
+    interfaces.enp1s0.ipv4.addresses = [
+      {
+        address = "192.168.2.102";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "192.168.0.1";
+    nameservers = [
+      "192.168.0.1",
+      "75.75.75.75",
+    ];
+  };  
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
