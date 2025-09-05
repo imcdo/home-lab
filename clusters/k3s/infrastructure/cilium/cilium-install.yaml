@@ -38,7 +38,11 @@ spec:
     tunnelProtocol: "geneve"
     
     cleanState: true
-    
+    l2announcements:
+      enabled: true
+    k8sClientRateLimit:
+      qps: 20
+      burst: 30
     hubble:
       enabled: true
       relay:
