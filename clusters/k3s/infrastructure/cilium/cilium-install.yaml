@@ -36,7 +36,9 @@ spec:
     
     routingMode: "tunnel"
     tunnelProtocol: "geneve"
-    
+    devices:
+      - eno1
+      - enp1s0
     cleanState: true
     l2announcements:
       enabled: true
@@ -50,7 +52,7 @@ spec:
       ui:
         enabled: true
         service:
-          type: LoadBalancer
+          type: ClusterIP
           # Optional: You can specify a particular IP from your pool if desired
           # loadBalancerIP: "192.168.4.100"
           # Or let Cilium automatically assign one from the pool
