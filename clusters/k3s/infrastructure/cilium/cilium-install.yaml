@@ -52,7 +52,7 @@ spec:
       ui:
         enabled: true
         service:
-          type: ClusterIP
+          type: LoadBalancer
           labels:
             app: hubble-ui
             external-connection: "true"
