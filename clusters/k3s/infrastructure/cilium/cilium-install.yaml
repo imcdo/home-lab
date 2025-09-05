@@ -55,7 +55,7 @@ spec:
           type: ClusterIP
           labels:
             app: hubble-ui
-            external-connection: true
+            external-connection: "true"
           # Optional: You can specify a particular IP from your pool if desired
           # loadBalancerIP: "192.168.4.100"
           # Or let Cilium automatically assign one from the pool

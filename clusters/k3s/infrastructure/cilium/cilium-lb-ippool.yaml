@@ -15,7 +15,7 @@ metadata:
 spec:
   serviceSelector:
     matchLabels:
-      external-connection: true
+      external-connection: "true"
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/control-plane
