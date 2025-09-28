@@ -56,7 +56,7 @@
       }
       ./modules/k3s.nix
       ./modules/users.nix
-    ]
+    ];
   in {
     nixosConfigurations = {
       think = nixpkgs.lib.nixosSystem {
