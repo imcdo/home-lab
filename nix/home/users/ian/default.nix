@@ -1,0 +1,68 @@
+{ pkgs, lib, sshConfig, ... }:
+
+{
+  home.username = "ian";
+  home.homeDirectory = "/home/ian";
+  home.stateVersion = "23.11"; # Use the appropriate state version
+  
+  # Let Home Manager manage itself
+  programs.home-manager.enable = true;
+
+
+  # Basic shell configuration
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      ll = "ls -la";
+      update = "sudo nixos-rebuild switch";
+    };
+    defaultShell = true;
+    enableCompletions = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    history.size = 10000000;
+
+    oh-my-zsh = { # "ohMyZsh" without Home Manager
+      enable = true;
+      plugins = [
+        "git"
+      ];
+      theme = "simple";
+    };
+  };
+
+  # Install packages for your user
+  home.packages = with pkgs; [
+    ripgrep
+    fd
+    tmux
+    bat
+    neovim
+    git
+    curl
+    wget
+    jq
+    tree
+    k9s
+    kubectl
+    helm
+    docker
+    wget
+    fluxcd
+    python313Full
+    btop
+    iptables
+    etcd
+    unixtools.nettools
+    unixtools.ping
+    unixtools.netstat
+    python313Packages.uptime
+  ]  ++ (with pkgs.python313Packages; [
+    pip
+    virtualenv
+    pipx
+    requests
+  ]);
+
+  home.file.".ssh/authorized_keys" = sshConfig.defaultPublicKey;
+}

@@ -77,8 +77,8 @@ in
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
     };
 
-    # Main user (ian)
-    users.users.ian = mkIf cfg.mainUser.enable {
+    # Main user (admin)
+    users.users.ian-admin = mkIf cfg.mainUser.enable {
       isNormalUser = true;
       extraGroups = [
         "wheel"
@@ -87,9 +87,9 @@ in
         "k3s"
         "docker"
       ];
-      description = "Ian";
+      description = "Administrator";
       shell = pkgs.bash;
-      home = "/home/ian";
+      home = "/home/ian-admin";
       packages = cfg.mainUser.packages;
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
     };
