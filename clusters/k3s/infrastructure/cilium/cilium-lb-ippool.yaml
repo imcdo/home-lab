@@ -12,6 +12,7 @@ apiVersion: "cilium.io/v2alpha1"
 kind: CiliumL2AnnouncementPolicy
 metadata:
   name: l2announcement-policy-external
+  namespace: kube-system
 spec:
   serviceSelector:
     matchLabels:
