@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixOS/nixpkgs";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     comin = {
       url = "github:nlewo/comin";
@@ -20,7 +21,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ self, nixpkgs, comin, vscode-server, disko, agenix, home-manager, ... }:
+  outputs = inputs@{
+    self,
+    nixpkgs,
+    comin,
+    vscode-server,
+    disko,
+    agenix,
+    home-manager,
+    ...
+  }:
   let
     lib = nixpkgs.lib;
     sshConfig = {
@@ -52,7 +62,7 @@
         home-manager.useUserPackages = true;
         # Use the common home configurations from a separate file
         home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users = import ./home { inherit pkgs lib sshConfig; };
+        home-manager.users = import ./home { sshConfig; };
       }
       ./modules/k3s.nix
       ./modules/users.nix
