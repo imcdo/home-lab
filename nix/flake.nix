@@ -62,7 +62,9 @@
         home-manager.useUserPackages = true;
         # Use the common home configurations from a separate file
         home-manager.extraSpecialArgs = { inherit inputs sshConfig; };
-        home-manager.users = import ./home;
+        home-manager.users = {
+          ian = import ./home/users/ian { inherit pkgs lib sshConfig; };
+        }
       }
       ./modules/k3s.nix
       ./modules/users.nix
