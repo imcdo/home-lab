@@ -16,7 +16,6 @@
       ll = "ls -la";
       update = "sudo nixos-rebuild switch";
     };
-    defaultShell = true;
     enableCompletions = true;
     history.size = 10000000;
 
