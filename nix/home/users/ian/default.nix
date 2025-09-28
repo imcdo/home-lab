@@ -18,8 +18,6 @@
     };
     defaultShell = true;
     enableCompletions = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
     history.size = 10000000;
 
     oh-my-zsh = { # "ohMyZsh" without Home Manager
