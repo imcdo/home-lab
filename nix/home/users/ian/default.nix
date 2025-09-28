@@ -56,5 +56,9 @@
     requests
   ]);
 
-  home.file.".ssh/authorized_keys" = sshConfig.defaultPublicKey;
+  home.file.".ssh/authorized_keys" = {
+    text = ''
+      ${sshConfig.defaultPublicKey}
+    '';
+  };
 }
