@@ -78,7 +78,7 @@ in
     };
 
     # Main user (admin)
-    users.users.ian = mkIf cfg.mainUser.enable {
+    users.users."ian-admin" = mkIf cfg.mainUser.enable {
       isNormalUser = true;
       extraGroups = [
         "wheel"
@@ -89,7 +89,7 @@ in
       ];
       description = "Administrator";
       shell = pkgs.bash;
-      home = "/home/ian";
+      home = "/home/ian-admin";
       packages = cfg.mainUser.packages;
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
     };
