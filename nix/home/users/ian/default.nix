@@ -2,12 +2,8 @@
 
 {
   home.username = "ian";
-  home.homeDirectory = "/home/ian";
-  home.stateVersion = "23.11"; # Use the appropriate state version
-  
-  # Let Home Manager manage itself
+  home.stateVersion = "23.11"; 
   programs.home-manager.enable = true;
-
 
   # Basic shell configuration
   programs.zsh = {
