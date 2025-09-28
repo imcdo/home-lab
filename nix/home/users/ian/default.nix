@@ -16,7 +16,6 @@
       ll = "ls -la";
       update = "sudo nixos-rebuild switch";
     };
-    enableCompletions = true;
     history.size = 10000000;
 
     oh-my-zsh = { # "ohMyZsh" without Home Manager
