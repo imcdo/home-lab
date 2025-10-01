@@ -23,11 +23,15 @@ spec:
       enabled: true
       service:
         type: LoadBalancer
-        annotations:
+        labels:
           external-connection: "true"
+        annotations:
+          io.cilium/lb-ipam-ips: "1"
+
     prometheus:
       service:
         type: LoadBalancer
-        annotations:
+        labels:
           external-connection: "true"
-  
+        annotations:
+          io.cilium/lb-ipam-ips: "1"
