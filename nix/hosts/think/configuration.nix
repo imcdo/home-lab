@@ -73,7 +73,7 @@
       openFirewall = true;
     };
   };
-  users.users.ian-admin.extraGroups = [ "jellyfin" ];
+  users.users.ian.extraGroups = [ "jellyfin" ];
 
   # Homelab modules configuration
   services.homelab = {
