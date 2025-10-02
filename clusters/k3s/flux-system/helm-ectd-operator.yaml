@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: etcd-operator
+  namespace: kube-system
+spec:
+  chart:
+    spec:
+      chart: etcd-operator
+      version: 0.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: helm-stable
+        namespace: default
+  values:
+    operator:
+      createCRD: true

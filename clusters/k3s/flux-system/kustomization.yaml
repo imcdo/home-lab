@@ -5,3 +5,4 @@ resources:
 - gotk-sync.yaml
 - cilium-kustomization.yaml
 - apps-kustomization.yaml
+- etcd-operator-kustomization.yaml
