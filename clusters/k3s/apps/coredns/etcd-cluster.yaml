@@ -1,7 +1,7 @@
 apiVersion: operator.etcd.io/v1alpha1
 kind: EtcdCluster
 metadata:
-  name: dns-ectd
+  name: dns-etcd
   namespace: network-dns
 spec:
   version: v3.6.0-rc.3
