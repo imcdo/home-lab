@@ -33,8 +33,7 @@ metadata:
   name: dns-etcd-client
   namespace: network-dns
   labels:
-    app: etcd
-    etcd_cluster: dns-etcd
+    app: dns-etcd
 spec:
   type: ClusterIP
   ports:
@@ -43,6 +42,5 @@ spec:
     targetPort: 2379
     protocol: TCP
   selector:
-    app: etcd
-    etcd_cluster: dns-ectd 
+    app: dns-etcd
   
