@@ -18,7 +18,7 @@ spec:
       name: coredns
     coredns:
       etcdUrls:
-        - "http://dns-etcd-client.network-dns.svc.cluster.local:7979"
+        - "http://dns-etcd-client.network-dns.svc.cluster.local:2379"
     sources:
       - service
     domainFilters:
