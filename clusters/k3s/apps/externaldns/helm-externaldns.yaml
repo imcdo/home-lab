@@ -27,3 +27,5 @@ spec:
       - external-dns.alpha.kubernetes.io/hostname
     policy: sync
     registry: txt
+    logLevel: debug
+
