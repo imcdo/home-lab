@@ -1,28 +1,28 @@
-apiVersion: etcd.database.coreos.com/v1beta2
+apiVersion: operator.etcd.io/v1alpha1
 kind: EtcdCluster
 metadata:
   name: dns-ectd
   namespace: network-dns
 spec:
+  version: v3.6.0-rc.3
   size: 3
-  version: 3.4.13
-  pod:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 200m
-        memory: 256Mi
-  backup:
-    enabled: true
-    intervalInSecond: 3600
-    retention: 24h
-    storageType: persistentVolume
-    volumeClaimTemplate:
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
+  # pod:
+  #   resources:
+  #     requests:
+  #       cpu: 100m
+  #       memory: 128Mi
+  #     limits:
+  #       cpu: 200m
+  #       memory: 256Mi
+  # backup:
+  #   enabled: true
+  #   intervalInSecond: 3600
+  #   retention: 24h
+  #   storageType: persistentVolume
+  #   volumeClaimTemplate:
+  #     spec:
+  #       accessModes:
+  #         - ReadWriteOnce
+  #       resources:
+  #         requests:
+  #           storage: 1Gi
