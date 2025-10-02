@@ -33,6 +33,7 @@ in
           btop
           iptables
           etcd
+          dig
           unixtools.nettools
           unixtools.ping
           unixtools.netstat
