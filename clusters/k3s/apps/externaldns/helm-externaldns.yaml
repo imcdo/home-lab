@@ -13,13 +13,7 @@ spec:
         kind: HelmRepository
         name: external-dns
         namespace: network-dns
-  values:
-    service:
-      type: LoadBalancer
-      labels:
-        external-connection: "true"
-      annotations:
-        io.cilium/lb-ipam-ips: "1"
+    
   provider:
     name: rfc2136
   rfc2136:

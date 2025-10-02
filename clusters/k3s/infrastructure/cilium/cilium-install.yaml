@@ -60,6 +60,6 @@ spec:
           # loadBalancerIP: "192.168.4.100"
           # Or let Cilium automatically assign one from the pool
           annotations:
-            io.cilium/lb-ipam-ips: "1"
+            # io.cilium/lb-ipam-ips: "1"
             external-dns.alpha.kubernetes.io/hostname: "hubble.home.lan"
 
