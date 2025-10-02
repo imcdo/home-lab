@@ -13,7 +13,7 @@ spec:
   chart:
     spec:
       chart: coredns
-      version: "56.6.2"
+      version: "1.43.3"
       sourceRef:
         kind: HelmRepository
         name: coredns
