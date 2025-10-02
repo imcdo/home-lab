@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: network-dns
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: external-dns
+      version: "56.6.2"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: network-dns
+  values:
+    service:
+      type: LoadBalancer
+      labels:
+        external-connection: "true"
+      annotations:
+        io.cilium/lb-ipam-ips: "1"
