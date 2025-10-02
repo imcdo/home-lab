@@ -4,4 +4,6 @@ kind: Kustomization
 resources:
   - kubernetes-dashboard
   - monitoring
+  - coredns
+  - externaldns
 
