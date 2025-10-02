@@ -4,6 +4,7 @@ metadata:
   name: etcd-operator
   namespace: kube-system
 spec:
+  interval: 10m
   chart:
     spec:
       chart: etcd-operator
@@ -12,7 +13,6 @@ spec:
         kind: HelmRepository
         name: helm-stable
         namespace: default
-      interval: 10m
   values:
     operator:
       createCRD: true
