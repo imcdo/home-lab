@@ -22,18 +22,16 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      version: "2.7.0"
+      version: "7.13.0"
       sourceRef:
         kind: HelmRepository
         name: kubernetes-dashboard
         namespace: kubernetes-dashboard
       interval: 12h
   values:
-    ingress:
-      enabled: true
-      ingressClassName: "traefik"
-      hosts:
-        - k8s-dashboard.k3s.lan
+    service:
+      type: LoadBalancer
+      labels:
+        external-connection: "true"
       annotations:
-        kubernetes.io/ingress.class: "traefik"
-        traefik.ingress.kubernetes.io/router.entrypoints: "web"
+        external-dns.alpha.kubernetes.io/hostname: "dashboard.home.lan"
