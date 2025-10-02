@@ -29,9 +29,17 @@ spec:
         namespace: kubernetes-dashboard
       interval: 12h
   values:
-    service:
-      type: LoadBalancer
-      labels:
+    web:
+      serviceLabels:
         external-connection: "true"
-      annotations:
+      serviceAnnotations:
         external-dns.alpha.kubernetes.io/hostname: "dashboard.home.lan"
+      service:
+        type: LoadBalancer
+    api:
+      serviceLabels:
+        external-connection: "true"
+      serviceAnnotations:
+        external-dns.alpha.kubernetes.io/hostname: "dashboard.home.lan"
+      service:
+        type: LoadBalancer
