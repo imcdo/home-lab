@@ -34,7 +34,7 @@ metadata:
   namespace: network-dns
   labels:
     app: etcd
-    etcd_cluster: dns-ectd  # Match the actual cluster name with typo for now
+    etcd_cluster: dns-etcd
 spec:
   type: ClusterIP
   ports:
