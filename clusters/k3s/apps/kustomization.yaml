@@ -6,3 +6,4 @@ resources:
   - monitoring
   - coredns/
   - externaldns/
+  - shared-helm.yaml

@@ -15,11 +15,10 @@ spec:
         namespace: network-dns
   values:
     provider:
-      name: rfc2136
-    rfc2136:
-      host: "192.168.6.0"
-      port: 53
-      zone: "home.lan."
+      name: coredns
+    coredns:
+      etcdUrls:
+        - "http://etcd-client.network-dns.svc.cluster.local:2379"
     sources:
       - service
     domainFilters:
