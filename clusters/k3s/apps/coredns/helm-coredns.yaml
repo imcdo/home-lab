@@ -32,27 +32,39 @@ spec:
       - name: dns-tcp
         protocol: TCP
         port: 53
-
-    extraConfig: |
-      home.lan:53 {
-          etcd home.lan {
-              endpoint http://etcd-client.network-dns.svc.cluster.local:2379
-              path /skydns
-          }
-          log
-          errors
-          prometheus
-          loadbalance
-          cache
-      }
-
-      .:53 {
-          kubernetes cluster.local
-          forward . /etc/resolv.conf
-          cache 30
-          errors
-          log
-      }
+    servers:
+      - zones:
+        - zone: .
+        port: 53
+        plugins:
+          - name: errors
+          # - name: health
+          #   parameters:
+          #     lameduck: 5s
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: cache
+            parameters: 30
+          - name: forward
+            parameters: . /etc/resolv.conf
+          - name: loadbalance
+          - name: logs 
+      - zones:
+        - zone: home.lan
+        port: 53
+        plugins:
+          - name: errors
+          - name: logs
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: cache
+            parameters: 30
+          - name: etcd
+            parameters:
+              parameters: home.lan
+              configBlock: |-
+                endpoint http://etcd-client.network-dns.svc.cluster.local:2379
+                path /skydns
 
     prometheus:
       monitoring:
