@@ -12,6 +12,7 @@ spec:
         kind: HelmRepository
         name: helm-stable
         namespace: default
+      interval: 10m
   values:
     operator:
       createCRD: true
