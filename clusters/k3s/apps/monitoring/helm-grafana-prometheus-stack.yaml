@@ -27,6 +27,7 @@ spec:
           external-connection: "true"
         annotations:
           io.cilium/lb-ipam-ips: "1"
+          external-dns.alpha.kubernetes.io/hostname: "grafana.home.lan"
 
     prometheus:
       service:
@@ -35,3 +36,4 @@ spec:
           external-connection: "true"
         annotations:
           io.cilium/lb-ipam-ips: "1"
+          external-dns.alpha.kubernetes.io/hostname: "prometheus.home.lan"

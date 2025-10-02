@@ -61,4 +61,5 @@ spec:
           # Or let Cilium automatically assign one from the pool
           annotations:
             io.cilium/lb-ipam-ips: "1"
+            external-dns.alpha.kubernetes.io/hostname: "hubble.home.lan"
 
