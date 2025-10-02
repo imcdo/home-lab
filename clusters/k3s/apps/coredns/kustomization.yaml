@@ -6,5 +6,4 @@ namespace: network-dns
 resources:
   - helm-repo.yaml
   - helm-coredns.yaml
-  - etcd-cluster.yaml
-
+  # - etcd-cluster.yaml
