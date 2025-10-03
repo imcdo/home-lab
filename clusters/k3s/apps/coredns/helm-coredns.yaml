@@ -48,13 +48,11 @@ spec:
           - name: forward
             parameters: . /etc/resolv.conf
           - name: loadbalance
-          - name: logs 
       - zones:
         - zone: home.lan
         port: 53
         plugins:
           - name: errors
-          - name: logs
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: cache
