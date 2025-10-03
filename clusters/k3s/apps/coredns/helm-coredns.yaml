@@ -38,7 +38,7 @@ spec:
         port: 53
         plugins:
           - name: errors
-          # - name: health
+          - name: health
           #   parameters:
           #     lameduck: 5s
           - name: prometheus
@@ -52,6 +52,7 @@ spec:
         - zone: home.lan
         port: 53
         plugins:
+          - name: health
           - name: errors
           - name: prometheus
             parameters: 0.0.0.0:9153
