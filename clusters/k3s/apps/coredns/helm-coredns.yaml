@@ -60,11 +60,10 @@ spec:
           - name: cache
             parameters: 30
           - name: etcd
-            parameters:
-              parameters: home.lan
-              configBlock: |
-                endpoint http://dns-etcd-client.network-dns.svc.cluster.local:2379
-                path /skydns
+            parameters: home.lan
+            configBlock: |
+              endpoint http://dns-etcd-client.network-dns.svc.cluster.local:2379
+              path /skydns
 
     prometheus:
       monitoring:
