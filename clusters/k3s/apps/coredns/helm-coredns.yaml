@@ -26,12 +26,15 @@ spec:
       annotations:
         io.cilium/lb-ipam-ips: "192.168.6.0"
     ports:
-      - name: dns-udp
+      - name: dns
         protocol: UDP
         port: 53
       - name: dns-tcp
         protocol: TCP
         port: 53
+      - name: metrics
+        protocol: TCP
+        port: 9153
     servers:
       - zones:
         - zone: .
