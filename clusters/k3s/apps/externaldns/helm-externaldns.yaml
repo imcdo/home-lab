@@ -16,9 +16,12 @@ spec:
   values:
     provider:
       name: coredns
-    coredns:
-      etcdUrls:
-        - "http://dns-etcd-client.network-dns.svc.cluster.local:2379"
+      # coredns:
+      #   etcdUrls:
+      #     - "http://dns-etcd-client.network-dns.svc.cluster.local:2379"
+    env:
+      - name: ETCD_URLS
+        value: "http://dns-etcd-client.network-dns.svc.cluster.local:2379"
     sources:
       - service
     domainFilters:
