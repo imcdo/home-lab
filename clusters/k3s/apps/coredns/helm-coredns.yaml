@@ -40,7 +40,8 @@ spec:
           - name: errors
           - name: health
           - name: ready
-
+          - name: loop
+          - name: reload
           #   parameters:
           #     lameduck: 5s
           - name: prometheus
@@ -57,6 +58,8 @@ spec:
           - name: health
           - name: ready
           - name: errors
+          - name: loop
+          - name: reload
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: cache
