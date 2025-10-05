@@ -36,6 +36,7 @@ metadata:
     app: dns-etcd
 spec:
   type: ClusterIP
+  clusterIP: 10.43.93.300
   ports:
   - name: client
     port: 2379
