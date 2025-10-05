@@ -45,8 +45,6 @@ spec:
           - name: ready
           - name: loop
           - name: reload
-          #   parameters:
-          #     lameduck: 5s
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: cache
@@ -55,7 +53,7 @@ spec:
             parameters: . /etc/resolv.conf
           - name: loadbalance
       - zones:
-        - zone: home.lan
+        - zone: home.lan.
         port: 53
         plugins:
           - name: health
@@ -72,6 +70,8 @@ spec:
             configBlock: |
               endpoint http://dns-etcd-client.network-dns.svc.cluster.local:2379
               path /skydns
+              timeout 5s
+              fallthrough
 
     prometheus:
       monitoring:
