@@ -70,7 +70,6 @@ spec:
             configBlock: |
               endpoint http://dns-etcd-client.network-dns.svc.cluster.local:2379
               path /skydns
-              timeout 5s
               fallthrough
 
     prometheus:
