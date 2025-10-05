@@ -94,10 +94,7 @@ spec:
           items:
             - key: resolv.conf
               path: resolv.conf
-    
-    # Mount the volume
     extraVolumeMounts:
       - name: custom-resolv
-        mountPath: /etc/coredns/resolv.conf
-        subPath: resolv.conf
+        mountPath: /etc/coredns
         readOnly: true
