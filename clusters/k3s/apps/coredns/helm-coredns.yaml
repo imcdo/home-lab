@@ -68,7 +68,7 @@ spec:
           - name: etcd
             parameters: home.lan
             configBlock: |
-              endpoint http://10.43.93.300:2379
+              endpoint http://10.43.93.200:2379
               path /skydns
               fallthrough
     prometheus:
