@@ -3,6 +3,19 @@ kind: Namespace
 metadata:
   name: network-dns
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-resolv-conf
+  namespace: network-dns
+data:
+  resolv.conf: |
+    nameserver 10.43.0.10
+    nameserver 192.168.0.1
+    nameserver 75.75.75.75
+    options edns0
+    search network-dns.svc.cluster.local svc.cluster.local cluster.local
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -50,7 +63,7 @@ spec:
           - name: cache
             parameters: 30
           - name: forward
-            parameters: . /etc/resolv.conf
+            parameters: . /etc/coredns/resolv.conf
           - name: loadbalance
       - zones:
         - zone: home.lan.
@@ -71,7 +84,20 @@ spec:
               endpoint http://dns-etcd-client.network-dns.svc.cluster.local:2379
               path /skydns
               fallthrough
-
     prometheus:
       monitoring:
         enabled: true
+    extraVolumes:
+      - name: custom-resolv
+        configMap:
+          name: custom-resolv-conf
+          items:
+            - key: resolv.conf
+              path: resolv.conf
+    
+    # Mount the volume
+    extraVolumeMounts:
+      - name: custom-resolv
+        mountPath: /etc/coredns/resolv.conf
+        subPath: resolv.conf
+        readOnly: true
