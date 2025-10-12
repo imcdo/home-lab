@@ -113,6 +113,7 @@ in
     };
 
     users.users.steam =  {
+      isSystemUser = true;
       description = "Steam User";
       shell = pkgs.bash;
       home = "/home/steam";
