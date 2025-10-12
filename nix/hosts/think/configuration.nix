@@ -53,6 +53,7 @@
     ];
   };
 
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
   services = {
@@ -110,6 +111,8 @@
     jellyfin-web
     jellyfin-ffmpeg
     zerotierone
+    steamcmd
+    tmux
   ];
 
   # Networking hostname is now handled by the k3s module
