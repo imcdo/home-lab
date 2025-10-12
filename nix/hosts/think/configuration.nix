@@ -100,6 +100,7 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "zerotierone"
+    "steamcmd"
   ];
 
   # Packages now handled by homelab modules
