@@ -111,6 +111,18 @@ in
       openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgGX3jzujNs6a192SuIC75KUOsyGfTN6elM2CXtcuimnqxOOa19Ect6RMb9OVdNi4BkzIHvYrES9WJDFqYpaDzpX6yYmBeg47aKps+n16+Y1PPqU9DkJDNBbqXHb3YsHFX6jq+Dc7ledUy64hyrQuhID/jajSC7ZSOiFLfzpX7yjWMXjgciyIfDgmi68ZAyzHUODN1/Ab5fV6HLTiNSJbTzMoVyvb9f86uCTdbCYEEk0pLCoRZoUaBMD+hvXu0NM8nclXT1bWe7nVSijaLeBOLAG8SGEun7LxN7jbVFmHtUDg/rT33ACmZHVHLNu6P47oJ4YyILuXzK7wWCZVb7vU4lP9HBbfgWCNRtiNokGzyi2Y5amGWqWvxPEKSRTXSTXie18XyjehFkLuKCjvLOykYGSQA7NM3mEDqBeiaKyB9Sl4kF9gEOWZ24mHQqIxbMFWY60IdnPqpF1KLy1oVg0KnxmC2LCbd4GSMm2vzgEPNM+F/nfVW4CcnLqiI1AmW3q9GX4BYDX9KcRYaqrzA2sNGlvCAnpr6XVP2OBBcTJCHCs4S3unUMiRlN7m1xWgAP2DNqjy5MObgau8JDjvV8Xcv7fLwDTKxPJTzZGGPazQq3brIbXGKhkQNXdghVe7Ld8OV5uzyEUQQoUiYER2Hh5ATukNkM3qvpAtjaGZcsHPt9Q== christian@grandlan.dev" ];
     };
 
+    users.users.steam =  {
+      description = "Steam User";
+      shell = pkgs.bash;
+      home = "/home/steam";
+      packages = with pkgs; [
+        steamcmd
+        git
+        tmux
+      ];
+      openssh.authorizedKeys.keys = [ cfg.sshKey, "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgGX3jzujNs6a192SuIC75KUOsyGfTN6elM2CXtcuimnqxOOa19Ect6RMb9OVdNi4BkzIHvYrES9WJDFqYpaDzpX6yYmBeg47aKps+n16+Y1PPqU9DkJDNBbqXHb3YsHFX6jq+Dc7ledUy64hyrQuhID/jajSC7ZSOiFLfzpX7yjWMXjgciyIfDgmi68ZAyzHUODN1/Ab5fV6HLTiNSJbTzMoVyvb9f86uCTdbCYEEk0pLCoRZoUaBMD+hvXu0NM8nclXT1bWe7nVSijaLeBOLAG8SGEun7LxN7jbVFmHtUDg/rT33ACmZHVHLNu6P47oJ4YyILuXzK7wWCZVb7vU4lP9HBbfgWCNRtiNokGzyi2Y5amGWqWvxPEKSRTXSTXie18XyjehFkLuKCjvLOykYGSQA7NM3mEDqBeiaKyB9Sl4kF9gEOWZ24mHQqIxbMFWY60IdnPqpF1KLy1oVg0KnxmC2LCbd4GSMm2vzgEPNM+F/nfVW4CcnLqiI1AmW3q9GX4BYDX9KcRYaqrzA2sNGlvCAnpr6XVP2OBBcTJCHCs4S3unUMiRlN7m1xWgAP2DNqjy5MObgau8JDjvV8Xcv7fLwDTKxPJTzZGGPazQq3brIbXGKhkQNXdghVe7Ld8OV5uzyEUQQoUiYER2Hh5ATukNkM3qvpAtjaGZcsHPt9Q== christian@grandlan.dev" ];
+    };
+
     # Admin user
     users.users.nixadmin = mkIf cfg.nixAdmin.enable {
       isNormalUser = true;
