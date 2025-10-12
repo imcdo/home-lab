@@ -72,6 +72,7 @@ in
       k3s = {};
       nix = {};
       nix-admins = {};
+      steam = {};
     };
 
     # Root user configuration
@@ -113,6 +114,7 @@ in
     };
 
     users.users.steam =  {
+      group = "steam";
       isSystemUser = true;
       description = "Steam User";
       shell = pkgs.bash;
