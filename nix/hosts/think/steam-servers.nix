@@ -45,7 +45,7 @@ in {
       RestartSec = "5s";
 
       MemoryAccounting = true;
-      MemoryMax = "4G";
+      MemoryMax = "12G";
 
       CPUAccounting = true;
       CPUQuota = "60%";
