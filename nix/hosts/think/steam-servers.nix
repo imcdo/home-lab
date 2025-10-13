@@ -23,7 +23,7 @@ in {
 
   # Satisfactory server
 
-  systemd.services.satisfactory-server = {
+  systemd.services."satisfactory-server" = {
     description = "Satisfactory Dedicated Server";
     after = [ "network.target" ];
     wants = [ "network.target" ];
