@@ -77,6 +77,7 @@
           ./hosts/think/disk-config.nix
           ./hosts/think/hardware-configuration.nix
           ./hosts/think/configuration.nix
+          ./modules/satisfactory-server.nix
         ] ++ (mkCommonModules "think");
       };
       chrome-a = nixpkgs.lib.nixosSystem {
