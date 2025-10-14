@@ -112,23 +112,6 @@ in
       openssh.authorizedKeys.keys = [ christianSshPublicKey ];
     };
 
-    users.users.steam =  {
-      group = "steam";
-      isSystemUser = true;
-      description = "Steam User";
-      shell = pkgs.bash;
-      home = "/home/steam";
-      packages = with pkgs; [
-        steamcmd
-        git
-        tmux
-      ];
-      openssh.authorizedKeys.keys = [
-        cfg.sshKey
-        christianSshPublicKey
-      ];
-    };
-
     # Admin user
     users.users.nixadmin = mkIf cfg.nixAdmin.enable {
       isNormalUser = true;
