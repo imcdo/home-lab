@@ -92,6 +92,11 @@
       nixAdmin.enable = true;
       nixPermissions.enable = true;
     };
+    satisfactoryServer = {
+      enable = true;
+      memoryMax = "12G";
+      cpuQuota = "60%";
+    };
   };
 
 
