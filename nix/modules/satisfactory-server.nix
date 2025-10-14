@@ -40,6 +40,7 @@ in {
       description = "Satisfactory Server User";
       shell = pkgs.bash;
       home = "/home/satisfactory-server";
+      createHome = true;
       packages = with pkgs; [
         steamcmd
         git
