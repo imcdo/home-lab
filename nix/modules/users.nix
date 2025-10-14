@@ -72,7 +72,6 @@ in
       k3s = {};
       nix = {};
       nix-admins = {};
-      steam = {};
     };
 
     # Root user configuration

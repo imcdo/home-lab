@@ -33,7 +33,7 @@ in {
 
   };
   config = mkIf cfg.enable {
-
+    users.groups."satisfactory-server" = {};
     users.users."satisfactory-server" =  {
       group = "satisfactory-server";
       isSystemUser = true;
