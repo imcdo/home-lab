@@ -34,7 +34,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 7777 ];
+    networking.firewall.allowedTCPPorts = [ 7777 8888 ];
 
     users.groups."satisfactory-server" = {};
     users.users."satisfactory-server" =  {
