@@ -80,6 +80,7 @@ in {
       };
 
       preStart = ''
+        set -eu
         mkdir -p ${satisfactoryDataDir}
         chown ${user}:${group} ${satisfactoryDataDir}
 
