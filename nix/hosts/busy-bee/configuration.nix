@@ -34,7 +34,7 @@ in {
         };
       };
     };
-    interfaces.enp1s0.ipv4.addresses = [
+    interfaces.eno1.ipv4.addresses = [
       {
         address = "192.168.0.104";
         prefixLength = 24;
@@ -117,7 +117,7 @@ in {
 
   # Networking hostname is now handled by the k3s module
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
