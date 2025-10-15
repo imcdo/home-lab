@@ -87,8 +87,8 @@ in {
     };
     satisfactoryServer = {
       enable = true;
-      memoryMax = "12G";
-      cpuQuota = "60%";
+      memoryMax = "30G";
+      cpuQuota = "90%";
     };
   };
 
