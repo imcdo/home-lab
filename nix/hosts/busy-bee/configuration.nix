@@ -41,13 +41,6 @@ in {
           prefixLength = 24;
         }
       ];
-      allowedTCPPorts = [
-        7777
-        8888
-      ];
-      allowedUDPPorts = [
-        7777
-      ];
     };
     defaultGateway = "192.168.0.1";
     nameservers = [
