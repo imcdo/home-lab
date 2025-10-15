@@ -104,6 +104,15 @@
           ./hosts/chrome-c/configuration.nix
         ] ++ (mkCommonModules "chrome-c");
       };
+      busy-bee = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/busy-bee/disk-config.nix
+          ./hosts/busy-bee/hardware-configuration.nix
+          ./hosts/busy-bee/configuration.nix
+          ./modules/satisfactory-server.nix
+        ] ++ (mkCommonModules "busy-bee");
+      };
     };
   };
 }

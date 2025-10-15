@@ -5,7 +5,7 @@
 { config, lib, pkgs, ... }:
 let
   hostName = "busy-bee";
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
