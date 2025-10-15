@@ -77,6 +77,8 @@ in {
         # prevent systemd assuming it daemonizes itself
         Type = "simple";
 
+        TimeoutStartSec = "5m";
+
         # Always restart on crash
         Restart = "always";
         RestartSec = "5s";
