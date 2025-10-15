@@ -37,6 +37,8 @@ in {
     networking.firewall.allowedTCPPorts = [
       7777
       8888
+      15000
+      15777
     ];
     networking.firewall.allowedUDPPorts = [
       7777
