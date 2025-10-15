@@ -37,9 +37,12 @@ in {
     networking.firewall.allowedTCPPorts = [
       7777
       8888
+      8080
     ];
     networking.firewall.allowedUDPPorts = [
       7777
+      15777
+      15000
     ];
 
     users.groups."satisfactory-server" = {};
@@ -65,6 +68,7 @@ in {
       after = [ "network.target" ];
       wants = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
+      requires = [ "network-online.target" ];
 
       serviceConfig = {
         User = user;
@@ -102,7 +106,6 @@ in {
             +quit
       '';
 
-      requires = [ "network-online.target" ];
     };
   };
 }
