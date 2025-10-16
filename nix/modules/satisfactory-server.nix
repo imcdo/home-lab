@@ -57,6 +57,7 @@ in {
         steamcmd
         git
         tmux
+        unzip
       ];
       openssh.authorizedKeys.keys = cfg.sshKeys;
     };
