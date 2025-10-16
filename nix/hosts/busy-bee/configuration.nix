@@ -34,7 +34,7 @@ in {
         };
       };
     };
-    interfaces.eno1 = {
+    interfaces.enp1s0 = {
       ipv4.addresses = [
         {
           address = "192.168.0.104";
