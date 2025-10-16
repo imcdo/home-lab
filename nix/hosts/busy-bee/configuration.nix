@@ -34,7 +34,7 @@ in {
         };
       };
     };
-    interfaces.enp1s0 = {
+    interfaces.eno1 = {
       ipv4.addresses = [
         {
           address = "192.168.0.104";
@@ -42,11 +42,11 @@ in {
         }
       ];
     };
-    # defaultGateway = "192.168.0.1";
-    # nameservers = [
-    #   "192.168.0.1"
-    #   "75.75.75.75"
-    # ];
+    defaultGateway = "192.168.0.1";
+    nameservers = [
+      "192.168.0.1"
+      "75.75.75.75"
+    ];
   };  
 
   services.zerotierone = {
