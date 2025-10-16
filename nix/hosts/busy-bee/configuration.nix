@@ -26,13 +26,13 @@ in {
   # Pick only one of the below networking options.
     networking = {
     wireless = {
-      enable = true;
-      userControlled.enable = true;
-      networks = {
-        "The Pirate Ping" = {
-          psk = "thegumgumfruit";
-        };
-      };
+      enable = false;
+      # userControlled.enable = true;
+      # networks = {
+      #   "The Pirate Ping" = {
+      #     psk = "thegumgumfruit";
+      #   };
+      # };
     };
     interfaces.enp1s0 = {
       ipv4.addresses = [
