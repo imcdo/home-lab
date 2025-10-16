@@ -42,11 +42,11 @@ in {
         }
       ];
     };
-    defaultGateway = "192.168.0.1";
-    nameservers = [
-      "192.168.0.1"
-      "75.75.75.75"
-    ];
+    # defaultGateway = "192.168.0.1";
+    # nameservers = [
+    #   "192.168.0.1"
+    #   "75.75.75.75"
+    # ];
   };  
 
   services.zerotierone = {
