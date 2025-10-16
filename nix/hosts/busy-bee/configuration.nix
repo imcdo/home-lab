@@ -49,12 +49,12 @@ in {
     ];
   };  
 
-  services.zerotierone = {
-  enable = true;
-  joinNetworks = [
-      "0cccb752f74b06e5"
-    ];
-  };
+  # services.zerotierone = {
+  # enable = true;
+  # joinNetworks = [
+  #     "0cccb752f74b06e5"
+  #   ];
+  # };
 
 
   # Set your time zone.
