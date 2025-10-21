@@ -6,3 +6,4 @@ resources:
 - cilium-kustomization.yaml
 - apps-kustomization.yaml
 - etcd-operator-kustomization.yaml
+- nginx-controller.yaml
