@@ -6,3 +6,4 @@ namespace: monitoring
 resources:
   - helm-repo.yaml
   - helm-grafana-prometheus-stack.yaml
+  - ingress.yaml
