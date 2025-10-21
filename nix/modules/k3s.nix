@@ -2,6 +2,14 @@
 with lib;
 let
   cfg = config.services.homelab.k3s;
+  zerotierEnabled = config.services.homelab.zerotier.enable or false;
+
+  nodeLabels = [
+    "node.homelab/hostname=${config.networking.hostName}"
+  ] ++ optionals zerotierEnabled [
+    "node.homelab/zerotier=true"
+  ];
+  nodeLabelFlags = map (label: "--node-label=${label}") nodeLabels;
 in
 {
   options.services.homelab.k3s = {
@@ -127,7 +135,7 @@ in
         "--disable=metrics-server"
         "--disable=servicelb"
         # "--disable=traefik"
-      ];
+      ] ++ nodeLabelFlags;
     };
   };
 }

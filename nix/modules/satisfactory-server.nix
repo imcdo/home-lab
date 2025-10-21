@@ -77,7 +77,7 @@ in {
 
         WorkingDirectory = satisfactoryDataDir;
 
-        ExecStart = "${pkgs.steam-run}/bin/steam-run ${satisfactoryDataDir}/FactoryServer.sh";
+        ExecStart = "${pkgs.steam-run}/bin/steam-run ${satisfactoryDataDir}/";
 
         # prevent systemd assuming it daemonizes itself
         Type = "simple";
