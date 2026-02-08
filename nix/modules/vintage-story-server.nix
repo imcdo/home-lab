@@ -40,6 +40,9 @@ in {
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
+    # Make vs-console available system-wide
+    environment.systemPackages = [ vs-console ];
+
     # 3. User Setup
     users.groups.${group} = {};
     users.users.${user} = {
