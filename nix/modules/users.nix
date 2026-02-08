@@ -36,7 +36,6 @@ in
           etcd
           dig
           tmux
-          unixtools.nettools
           unixtools.ping
           unixtools.netstat
           python313Packages.uptime
