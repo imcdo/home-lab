@@ -71,8 +71,26 @@ in {
 
         Type = "forking"; # Tmux detaches, so systemd needs to know it's a fork
 
-        ExecStart = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} new-session -d -s vintage-story '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}'";
-        ExecStop = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys -t vintage-story \"/stop\" ENTER";
+        ExecStart = pkgs.writeShellScript "start-vintage-story" ''
+          # Clean up any existing socket
+          rm -f ${tmuxSocket}
+          # Start tmux session with proper permissions
+          ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} new-session -d -s vintage-story
+          # Set socket permissions so the user can access it
+          chmod 660 ${tmuxSocket}
+          # Send the server command to the session
+          ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}' ENTER
+        '';
+        ExecStop = pkgs.writeShellScript "stop-vintage-story" ''
+          if ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} has-session -t vintage-story 2>/dev/null; then
+            ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys -t vintage-story "/stop" ENTER
+            # Wait a bit for graceful shutdown
+            sleep 10
+            # Kill session if still running
+            ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} kill-session -t vintage-story 2>/dev/null || true
+          fi
+          rm -f ${tmuxSocket}
+        '';
         Restart = "always";
         RestartSec = "120s";
         TimeoutStopSec = 360;
@@ -86,6 +104,10 @@ in {
       preStart = ''
         mkdir -p ${dataDir}
         chown -R ${user}:${group} ${dataDir}
+        # Clean up any leftover socket
+        rm -f ${tmuxSocket}
+        # Ensure the user can write to home directory for socket
+        chown ${user}:${group} ${homeDir}
       '';
     };
   };
