@@ -110,6 +110,7 @@
           ./hosts/busy-bee/hardware-configuration.nix
           ./hosts/busy-bee/configuration.nix
           ./modules/satisfactory-server.nix
+          ./modules/vintage-story-server.nix
         ] ++ (mkCommonModules "busy-bee");
       };
     };

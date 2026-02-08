@@ -88,9 +88,14 @@ in {
       nixPermissions.enable = true;
     };
     satisfactoryServer = {
-      enable = true;
+      enable = false;
       memoryMax = "30G";
       cpuQuota = "90%";
+    };
+    vintageStory = {
+      enable = false;
+      enable = true;
+      version = "1.21.6";
     };
   };
 
