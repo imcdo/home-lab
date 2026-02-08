@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 with lib;
 
@@ -48,7 +48,7 @@ in {
       home = homeDir;
       createHome = true;
       packages = with pkgs; [
-        vintagestory # The official package
+        pkgs-unstable.vintagestory # The unstable package for latest features
         screen
         tmux
       ];
@@ -67,9 +67,9 @@ in {
         Group = group;
         WorkingDirectory = homeDir;
 
-        # We use the binary provided by the Nix package.
+        # We use the binary provided by the unstable Nix package.
         # The --dataPath flag ensures your saves stay persistent in /home/vintage-story/data
-        ExecStart = "${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
+        ExecStart = "${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
 
         Restart = "always";
         RestartSec = "10s";

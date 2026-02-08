@@ -24,6 +24,7 @@
   outputs = inputs@{
     self,
     nixpkgs,
+    nixpkgs-unstable,
     comin,
     vscode-server,
     disko,
@@ -105,6 +106,12 @@
       };
       busy-bee = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = {
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        };
         modules = [
           ./hosts/busy-bee/disk-config.nix
           ./hosts/busy-bee/hardware-configuration.nix
