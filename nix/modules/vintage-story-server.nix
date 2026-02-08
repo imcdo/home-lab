@@ -74,9 +74,9 @@ in {
         ExecStart = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} new-session -d -s vintage-story '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}'";
         ExecStop = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys -t vintage-story \"/stop\" ENTER";
         Restart = "always";
-        RestartSec = "10s";
+        RestartSec = "120s";
         TimeoutStopSec = 360;
-        KillMode = "none";
+        KillMode = "mixed";
 
         # Standard memory/cpu limits (matching your Satisfactory style)
         MemoryAccounting = true;
