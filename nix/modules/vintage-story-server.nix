@@ -69,7 +69,7 @@ in {
         Group = group;
         WorkingDirectory = homeDir;
 
-        Type = "forking"; # Tmux detaches, so systemd needs to know it's a fork
+        Type = "simple"; # Tmux detaches, so systemd needs to know it's a fork
 
         ExecStart = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} new-session -d -s vintage-story '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}'";
         ExecStop = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys -t vintage-story \"/stop\" ENTER";
