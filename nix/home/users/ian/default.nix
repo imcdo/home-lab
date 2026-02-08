@@ -41,7 +41,7 @@
     docker
     wget
     fluxcd
-    python
+    python3
     btop
     iptables
     etcd
