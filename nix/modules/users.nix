@@ -30,7 +30,7 @@ in
           fluxcd
           kubectl
           k9s
-          python313
+          python
           btop
           iptables
           etcd
