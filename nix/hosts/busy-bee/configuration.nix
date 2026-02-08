@@ -94,7 +94,6 @@ in {
     };
     vintageStory = {
       enable = true;
-      version = "1.21.6";
     };
   };
 
