@@ -77,7 +77,7 @@ in {
         Group = group;
         WorkingDirectory = homeDir;
         # Use the binary from the Nix package
-        ExecStart = "${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
+        ExecStart = "${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
         Restart = "always";
       };
 
