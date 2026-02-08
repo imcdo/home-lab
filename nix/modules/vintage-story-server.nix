@@ -7,10 +7,7 @@ let
   user = "vintage-story";
   group = "vintage-story";
   homeDir = "/home/${user}";
-  # Where the server binaries live
-  serverBinDir = "${homeDir}/server";
-  # Where the actual world saves, mods, and logs live
-  serverDataDir = "${homeDir}/data";
+  dataDir = "${homeDir}/data";
   christianSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgGX3jzujNs6a192SuIC75KUOsyGfTN6elM2CXtcuimnqxOOa19Ect6RMb9OVdNi4BkzIHvYrES9WJDFqYpaDzpX6yYmBeg47aKps+n16+Y1PPqU9DkJDNBbqXHb3YsHFX6jq+Dc7ledUy64hyrQuhID/jajSC7ZSOiFLfzpX7yjWMXjgciyIfDgmi68ZAyzHUODN1/Ab5fV6HLTiNSJbTzMoVyvb9f86uCTdbCYEEk0pLCoRZoUaBMD+hvXu0NM8nclXT1bWe7nVSijaLeBOLAG8SGEun7LxN7jbVFmHtUDg/rT33ACmZHVHLNu6P47oJ4YyILuXzK7wWCZVb7vU4lP9HBbfgWCNRtiNokGzyi2Y5amGWqWvxPEKSRTXSTXie18XyjehFkLuKCjvLOykYGSQA7NM3mEDqBeiaKyB9Sl4kF9gEOWZ24mHQqIxbMFWY60IdnPqpF1KLy1oVg0KnxmC2LCbd4GSMm2vzgEPNM+F/nfVW4CcnLqiI1AmW3q9GX4BYDX9KcRYaqrzA2sNGlvCAnpr6XVP2OBBcTJCHCs4S3unUMiRlN7m1xWgAP2DNqjy5MObgau8JDjvV8Xcv7fLwDTKxPJTzZGGPazQq3brIbXGKhkQNXdghVe7Ld8OV5uzyEUQQoUiYER2Hh5ATukNkM3qvpAtjaGZcsHPt9Q== christian@grandlan.dev";
   ianSshPublicKey ="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJwCoP+9JDU6mH4pZCsk/GlhDXiarbdyaakIB1DzLMRtiv79U/aTkTvgm/TTmeQLM0W3vHYsKDloNRhRK87UbN798aiYk1g6w51OL7ClxlGStpZoRtTAA+enG2g55Vhx7WUM0kKvYw44iSWH60NN+XCItdHrGB6hBNf9Q86h+fzv2U92PvZOEjdX2PaNZ/2RR3QA6kf1ra8Na5RdXu3wvAZx+qAzrPXP8TGShcMc1kdYFC/RPzkUrj0Y2il3LXO7gAo1fi+RyZi9y0vvK3YNDHqxVE+dmMNYz9Ipsy2QBHF7vowJajvJVEAn8DQDSeQqRWwVeQZPTywzZbG8Ng0HlNV1QjUQbh3ZB3lWUdu5RQqD+Tltzo6fWkkN49FiYse/zlrIiUSayvALcGxeyvKTa0udIO2mGZO94aY/pg5uhG4/dHNk3JWRI2QyE0RyxCBRn9YksMPXVgkQ/ARgIbqrNP22JLFeffeB+zfBQQiPGsfnqTr8RWTyzlkltom6Uh5dksn7WfnbTofQbMIw6bU9x15+tmoxgJm3QzTnandpVXOsxSx5M2NJyTYIvkKegbJcRS0C4AiUeLDhm4feN/fg6oSRV4m+qpeFug0bO0AqjjKaaYOMHS6FoyT0osoLECMg0NjFdSuOVAdp7eB3sZD3nTtTPsnayyj+3uip+ajNhahw== ian@DESKTOP-C07E16P";
 
@@ -21,29 +18,27 @@ in {
 
     sshKeys = mkOption {
       type = types.listOf types.str;
-      default = [ ianSshPublicKey christianSshPublicKey ];
+      default = [ christianSshPublicKey ianSshPublicKey ]; 
       description = "SSH public keys for server access";
     };
 
     port = mkOption {
       type = types.port;
       default = 42420;
-      description = "The port the server listens on (default 42420)";
-    };
-
-    version = mkOption {
-      type = types.str;
-      default = "1.21.6";
-      description = "The version of Vintage Story to download";
+      description = "The port the server listens on";
     };
   };
 
   config = mkIf cfg.enable {
-      # 1. Networking
-      networking.firewall.allowedTCPPorts = [ cfg.port ];
+    # 1. Allow Unfree (Vintage Story is not open source)
+    # Note: You may need this in your global configuration.nix as well
+    nixpkgs.config.allowUnfree = true;
+
+    # 2. Networking
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
-    # 2. User Setup
+    # 3. User Setup
     users.groups.${group} = {};
     users.users.${user} = {
       group = group;
@@ -53,15 +48,14 @@ in {
       home = homeDir;
       createHome = true;
       packages = with pkgs; [
-        curl
-        icu
-        dotnet-runtime_8
+        vintagestory # The official package
         screen
+        tmux
       ];
       openssh.authorizedKeys.keys = cfg.sshKeys;
     };
 
-    # 3. The Systemd Service
+    # 4. The Systemd Service
     systemd.services.vintage-story = {
       description = "Vintage Story Dedicated Server";
       after = [ "network.target" ];
@@ -72,37 +66,22 @@ in {
         User = user;
         Group = group;
         WorkingDirectory = homeDir;
-        
-        # We tell the server exactly where to put its data so it doesn't clutter the binary folder
-        ExecStart = "${pkgs.dotnet-runtime_8}/bin/dotnet ${serverBinDir}/VintagestoryServer.dll --dataPath ${serverDataDir}";
+
+        # We use the binary provided by the Nix package.
+        # The --dataPath flag ensures your saves stay persistent in /home/vintage-story/data
+        ExecStart = "${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
 
         Restart = "always";
         RestartSec = "10s";
 
-        # Optional: Security Hardening (common in NixOS services)
-        ProtectSystem = "full";
-        NoNewPrivileges = true;
+        # Standard memory/cpu limits (matching your Satisfactory style)
+        MemoryAccounting = true;
+        CPUAccounting = true;
       };
 
-      # This script runs every time the service starts. 
-      # It checks if the requested version is installed, and if not, downloads it.
       preStart = ''
-        set -eu
-        mkdir -p ${serverBinDir} ${serverDataDir}
-        
-        # Check current version
-        if [ ! -f "${serverBinDir}/version.txt" ] || [ "$(cat ${serverBinDir}/version.txt)" != "${cfg.version}" ]; then
-          echo "Downloading Vintage Story version ${cfg.version}..."
-          
-          # Download the tarball from the VS CDN
-          URL="https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_${cfg.version}.tar.gz"
-          curl -L "$URL" | tar xz -C ${serverBinDir} --strip-components=1
-          
-          # Record the version so we don't redownload every time
-          echo "${cfg.version}" > ${serverBinDir}/version.txt
-        fi
-        
-        chown -R ${user}:${group} ${homeDir}
+        mkdir -p ${dataDir}
+        chown -R ${user}:${group} ${dataDir}
       '';
     };
   };
