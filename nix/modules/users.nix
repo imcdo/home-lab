@@ -35,6 +35,7 @@ in
           iptables
           etcd
           dig
+          tmux
           unixtools.nettools
           unixtools.ping
           unixtools.netstat

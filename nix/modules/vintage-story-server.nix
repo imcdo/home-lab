@@ -67,12 +67,14 @@ in {
         Group = group;
         WorkingDirectory = homeDir;
 
-        # We use the binary provided by the unstable Nix package.
-        # The --dataPath flag ensures your saves stay persistent in /home/vintage-story/data
-        ExecStart = "${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}";
+        Type = "forking"; # Tmux detaches, so systemd needs to know it's a fork
 
+        ExecStart = "${pkgs.tmux}/bin/tmux new-session -d -s vintage-story '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}'";
+
+        ExecStop = "${pkgs.tmux}/bin/tmux send-keys -t vintage-story \"/stop\" ENTER";
         Restart = "always";
         RestartSec = "10s";
+        TimeoutStopSec = 360;
 
         # Standard memory/cpu limits (matching your Satisfactory style)
         MemoryAccounting = true;
