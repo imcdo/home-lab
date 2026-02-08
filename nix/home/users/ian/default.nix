@@ -42,6 +42,7 @@
     wget
     fluxcd
     python3
+    cloudflared
     btop
     iptables
     etcd
