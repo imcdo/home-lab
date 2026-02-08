@@ -94,22 +94,6 @@ in {
     };
     vintageStory = {
       enable = true;
-      port = 42420;
-      password = null; # Set a password if you want one
-
-      admins = [
-        {
-          name = "imcdo";
-          uid = "imcdo";
-        }
-      ];
-
-      # This is where we explicitly disable the whitelist
-      extraSettings = {
-        WhitelistMode = "off";
-        MaxClients = 16;
-        ServerName = "Surviving Adulthood";
-      };
     };
   };
 
