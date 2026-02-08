@@ -93,7 +93,6 @@ in {
       cpuQuota = "90%";
     };
     vintageStory = {
-      enable = false;
       enable = true;
       version = "1.21.6";
     };

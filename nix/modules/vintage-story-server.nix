@@ -33,14 +33,14 @@ in {
 
     version = mkOption {
       type = types.str;
-      default = "1.19.8"; # Update this when a new stable release drops
+      default = "1.21.6";
       description = "The version of Vintage Story to download";
     };
   };
 
   config = mkIf cfg.enable {
-    # 1. Networking
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
+      # 1. Networking
+      networking.firewall.allowedTCPPorts = [ cfg.port ];
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
     # 2. User Setup
@@ -55,7 +55,7 @@ in {
       packages = with pkgs; [
         curl
         icu
-        dotnet-runtime_8 # Vintage Story 1.19+ requires .NET 8
+        dotnet-runtime_8
         screen
       ];
       openssh.authorizedKeys.keys = cfg.sshKeys;
