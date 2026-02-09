@@ -108,9 +108,6 @@
         modules =
           [
             # Apply overlays to make unstable packages available as pkgs.unstable
-            ({ config, pkgs, ... }: {
-              nixpkgs.overlays = [ overlays.unstable-packages ];
-            })
             ./hosts/${name}/disk-config.nix
             ./hosts/${name}/hardware-configuration.nix
             ./hosts/${name}/configuration.nix
