@@ -12,7 +12,7 @@ let
 
   # Unique hashes for each architecture
   hashMap = {
-    "x86_64-linux" = "sha256-4Y90fA3LPDYfIOnS8L73U9N9HzZf6EWs0Jpbm0X0C7w=";
+    "x86_64-linux" = "sha256-541GPZOqHj7Dagbe1aH0/oeZBf3OuGXfj0zvYST4pVU=";
     "aarch64-linux" = "sha256-insert-arm64-hash-here="; # Get this via nix-prefetch-url
   };
 
