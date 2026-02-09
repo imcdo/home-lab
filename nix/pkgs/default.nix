@@ -3,4 +3,4 @@
 pkgs: {
   # example = pkgs.callPackage ./example { };
   playit = pkgs.callPackage ./playit.nix { };
-};
+}
