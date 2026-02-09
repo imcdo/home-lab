@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 with lib;
 
@@ -53,7 +53,7 @@ in {
       home = homeDir;
       createHome = true;
       packages = with pkgs; [
-        pkgs-unstable.vintagestory # The unstable package for latest features
+        unstable.vintagestory # The unstable package for latest features
         screen
         tmux
       ];
@@ -82,7 +82,7 @@ in {
           # Set socket permissions so the user can access it
           chmod 660 ${tmuxSocket}
           # Send the server command to the session
-          ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys '${pkgs-unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}' ENTER
+          ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} send-keys '${pkgs.unstable.vintagestory}/bin/vintagestory-server --dataPath ${dataDir}' ENTER
         '';
         ExecStop = pkgs.writeShellScript "stop-vintage-story" ''
           if ${pkgs.tmux}/bin/tmux -S ${tmuxSocket} has-session -t vintage-story 2>/dev/null; then

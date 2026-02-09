@@ -118,6 +118,7 @@ in {
     zerotierone
     steamcmd
     tmux
+    playit
   ];
 
   # Networking hostname is now handled by the k3s module
