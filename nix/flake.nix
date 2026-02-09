@@ -95,6 +95,13 @@
           ian = import ./home/users/ian;
         };
       }
+      ({ config, pkgs, ... }: {
+        nixpkgs.overlays = [ 
+          outputs.overlays.additions
+          outputs.overlays.modifications  
+          outputs.overlays.unstable-packages
+        ];
+      })
       ./modules/k3s.nix
       ./modules/users.nix
     ];
