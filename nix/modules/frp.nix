@@ -68,13 +68,14 @@ in {
     services.frp = {
       enable = true;
       role = "client";
-      settings = {
-        common = {
-          server_addr = cfg.serverAddr;
-          server_port = cfg.serverPort;
-          token_file = cfg.tokenFile;
-        };
-      } // cfg.services;
+      settings = 
+        {
+          common = {
+            server_addr = cfg.serverAddr;
+            server_port = cfg.serverPort;
+            token_file = cfg.tokenFile;
+          };
+        } // cfg.services;
     };
 
     # Ensure FRP service runs as the correct user
@@ -82,6 +83,8 @@ in {
       serviceConfig = {
         User = user;
         Group = group;
+        # Add supplementary groups to access secrets
+        SupplementaryGroups = [ "keys" ];
       };
     };
   };
