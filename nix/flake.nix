@@ -144,6 +144,7 @@
       busy-bee = machine "busy-bee" [
         ./modules/satisfactory-server.nix
         ./modules/vintage-story-server.nix
+        ./modules/frp.nix
       ];
     };
   };

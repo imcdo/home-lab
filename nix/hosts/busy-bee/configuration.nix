@@ -11,7 +11,7 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # Configure secrets
+  # Configure age secrets
   age.secrets.frp-token = {
     file = ../../secrets/frp-token.age;
     mode = "0400";
@@ -103,31 +103,25 @@ in {
     vintageStory = {
       enable = true;
     };
-  };
-
-    services.frp = {
+    frp = {
       enable = true;
-      role = "client";
-      settings = {
-        common = {
-          server_addr = "iansvintagestory.exfrp.fun";
-          server_port = 7000;
-          token_file = config.age.secrets.frp-token.path;
-        };
+      tokenFile = config.age.secrets.frp-token.path;
+      services = {
         vintagestory-tcp = {
           type = "tcp";
-          local_ip = "127.0.0.1";
-          local_port = 42420;
-          remote_port = 12345; # Your assigned port
+          localIp = "127.0.0.1";
+          localPort = 42420;
+          remotePort = 12345;
         };
         vintagestory-udp = {
           type = "udp";
-          local_ip = "127.0.0.1";
-          local_port = 42420;
-          remote_port = 12345;
+          localIp = "127.0.0.1";
+          localPort = 42420;
+          remotePort = 12345;
         };
       };
     };
+  };
 
   # Open your local NixOS firewall for the server
   networking.firewall.allowedTCPPorts = [ 42420 ];
