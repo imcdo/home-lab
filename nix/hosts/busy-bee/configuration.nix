@@ -103,25 +103,6 @@ in {
     vintageStory = {
       enable = true;
     };
-    frp = {
-      enable = true;
-      serverAddr = "iansvintagestory.exfrp.fun";
-      tokenFile = config.age.secrets.frp-token.path;
-      services = {
-        vintagestory-tcp = {
-          type = "tcp";
-          localIp = "127.0.0.1";
-          localPort = 42420;
-          remotePort = 59736;
-        };
-        vintagestory-udp = {
-          type = "udp";
-          localIp = "127.0.0.1";
-          localPort = 42420;
-          remotePort = 59736;
-        };
-      };
-    };
   };
 
   # Open your local NixOS firewall for the server
@@ -150,6 +131,7 @@ in {
     steamcmd
     tmux
     openvpn
+    exfrp
   ];
 
   # Networking hostname is now handled by the k3s module
