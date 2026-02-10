@@ -4,6 +4,7 @@ let
     chromeA = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt5IJzeVtLTnIq2b+08XqgFb+LqFhKF9A4J6wLS1NJE";
     chromeB = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMSQG5JO+REK6S0rT8h5pd2bDgYJyFWIfVxAJL9sjdQo";
     chromeC = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvFjFCx1TRqYyi4RsdXqLVuqSBAj76/albJvH+klMZ8";
+    busyBee = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6QP83g7gYMMZL32Oecpfe03Cr0N9cmxc6OWeZ8LGlq";
 in {
     "k3s-token.age".publicKeys = [
         ianDesktop
@@ -11,5 +12,9 @@ in {
         chromeA
         chromeB
         chromeC
+    ];
+    "frp-token.age".publicKeys = [
+        ianDesktop
+        busyBee
     ];
 }

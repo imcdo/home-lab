@@ -10,6 +10,14 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  # Configure secrets
+  age.secrets.frp-token = {
+    file = ../../secrets/frp-token.age;
+    mode = "0400";
+    owner = "frp";
+    group = "frp";
+  };
   # Use the systemd-boot EFI boot loader.
   # boot.loader.efi.canTouchEfiVariables = true;
   # boot.loader.grub.device = "nodev";
@@ -96,6 +104,34 @@ in {
       enable = true;
     };
   };
+
+    services.frp = {
+      enable = true;
+      role = "client";
+      settings = {
+        common = {
+          server_addr = "iansvintagestory.exfrp.fun";
+          server_port = 7000;
+          token_file = config.age.secrets.frp-token.path;
+        };
+        vintagestory-tcp = {
+          type = "tcp";
+          local_ip = "127.0.0.1";
+          local_port = 42420;
+          remote_port = 12345; # Your assigned port
+        };
+        vintagestory-udp = {
+          type = "udp";
+          local_ip = "127.0.0.1";
+          local_port = 42420;
+          remote_port = 12345;
+        };
+      };
+    };
+
+  # Open your local NixOS firewall for the server
+  networking.firewall.allowedTCPPorts = [ 42420 ];
+  networking.firewall.allowedUDPPorts = [ 42420 ];
 
 
   # Set hostname
