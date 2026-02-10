@@ -4,9 +4,9 @@ let
   # Unique hashes for each architecture
   # Use lib.fakeHash or "" to find the real hash via the build error
   hashMap = {
-    "x86_64-linux" = "sha256-0000000000000000000000000000000000000000000=";
-    "aarch64-linux" = "sha256-0000000000000000000000000000000000000000000=";
-    "armv7l-linux" = "sha256-0000000000000000000000000000000000000000000=";
+    "x86_64-linux" = "sha256-Fp1di/cNDTXZY8zWyNjq8w3lFJJvyqWzlvp4Ai2SxKk=";
+    "aarch64-linux" = lib.fakeHash;
+    "armv7l-linux" = lib.fakeHash;
   };
 
   # Mapping Nix system strings to the file names in your URL
