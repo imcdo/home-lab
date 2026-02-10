@@ -11,13 +11,6 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # Configure age secrets
-  age.secrets.frp-token = {
-    file = ../../secrets/frp-token.age;
-    mode = "0400";
-    owner = "frp";
-    group = "frp";
-  };
   # Use the systemd-boot EFI boot loader.
   # boot.loader.efi.canTouchEfiVariables = true;
   # boot.loader.grub.device = "nodev";
@@ -133,12 +126,6 @@ in {
     openvpn
     exfrp
   ];
-  
-  age.secrets."frp-token" = {
-    file = ../path/to/secret.age;
-    owner = "root";  # Change this from "frp"
-    group = "root";  # Change this from "frp"
-  };
 
   # Networking hostname is now handled by the k3s module
   # Or disable the firewall altogether.
