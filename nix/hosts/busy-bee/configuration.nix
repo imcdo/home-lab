@@ -105,6 +105,7 @@ in {
     };
     frp = {
       enable = true;
+      serverAddr = "iansvintagestory.exfrp.fun";
       tokenFile = config.age.secrets.frp-token.path;
       services = {
         vintagestory-tcp = {
