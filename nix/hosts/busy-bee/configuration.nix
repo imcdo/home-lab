@@ -133,6 +133,12 @@ in {
     openvpn
     exfrp
   ];
+  
+  age.secrets."frp-token" = {
+    file = ../path/to/secret.age;
+    owner = "root";  # Change this from "frp"
+    group = "root";  # Change this from "frp"
+  };
 
   # Networking hostname is now handled by the k3s module
   # Or disable the firewall altogether.
