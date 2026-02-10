@@ -12,7 +12,7 @@ in {
 
     serverAddr = mkOption {
       type = types.str;
-      default = "frp1.exfrp.com";
+      default = "iansvintagestory.exfrp.fun";
       description = "FRP server address";
     };
 
