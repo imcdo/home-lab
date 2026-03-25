@@ -14,7 +14,9 @@ metadata:
   namespace: network-dns
   labels:
     app: dns-etcd
+    controller: dns-etcd
 spec:
+  type: ClusterIP
   clusterIP: None
   publishNotReadyAddresses: true
   ports:
@@ -28,6 +30,7 @@ spec:
     protocol: TCP
   selector:
     app: dns-etcd
+    controller: dns-etcd
 ---
 apiVersion: v1
 kind: Service
