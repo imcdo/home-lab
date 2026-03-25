@@ -10,6 +10,28 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: dns-etcd
+  namespace: network-dns
+  labels:
+    app: dns-etcd
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+  - name: client
+    port: 2379
+    targetPort: 2379
+    protocol: TCP
+  - name: peer
+    port: 2380
+    targetPort: 2380
+    protocol: TCP
+  selector:
+    app: dns-etcd
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: dns-etcd-client
   namespace: network-dns
   labels:
