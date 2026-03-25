@@ -95,6 +95,7 @@ in
       home = "/home/ian";
       packages = cfg.mainUser.packages;
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
+      hashedPassword = "$y$j9T$9BdqgTuOcv0mD2QnhVpbn0$m6yMKdiA6s826YSDU8JR9hBiQBS2riTunsOrZVAPcp2";
     };
 
     users.users.christian =  {
