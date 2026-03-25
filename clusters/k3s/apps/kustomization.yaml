@@ -6,4 +6,5 @@ resources:
   - monitoring
   - coredns/
   - externaldns/
+  - fireflyiii/
   - shared-helm.yaml
