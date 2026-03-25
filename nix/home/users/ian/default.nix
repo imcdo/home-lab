@@ -2,7 +2,8 @@
 
 {
   home.username = "ian";
-  home.stateVersion = "23.11"; 
+  home.homeDirectory = "/home/ian";
+  home.stateVersion = "23.11";
   programs.home-manager.enable = true;
 
   # Basic shell configuration

@@ -40,12 +40,19 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # NixOS WSL
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    nixos-wsl,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -65,25 +72,20 @@
       defaultPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJwCoP+9JDU6mH4pZCsk/GlhDXiarbdyaakIB1DzLMRtiv79U/aTkTvgm/TTmeQLM0W3vHYsKDloNRhRK87UbN798aiYk1g6w51OL7ClxlGStpZoRtTAA+enG2g55Vhx7WUM0kKvYw44iSWH60NN+XCItdHrGB6hBNf9Q86h+fzv2U92PvZOEjdX2PaNZ/2RR3QA6kf1ra8Na5RdXu3wvAZx+qAzrPXP8TGShcMc1kdYFC/RPzkUrj0Y2il3LXO7gAo1fi+RyZi9y0vvK3YNDHqxVE+dmMNYz9Ipsy2QBHF7vowJajvJVEAn8DQDSeQqRWwVeQZPTywzZbG8Ng0HlNV1QjUQbh3ZB3lWUdu5RQqD+Tltzo6fWkkN49FiYse/zlrIiUSayvALcGxeyvKTa0udIO2mGZO94aY/pg5uhG4/dHNk3JWRI2QyE0RyxCBRn9YksMPXVgkQ/ARgIbqrNP22JLFeffeB+zfBQQiPGsfnqTr8RWTyzlkltom6Uh5dksn7WfnbTofQbMIw6bU9x15+tmoxgJm3QzTnandpVXOsxSx5M2NJyTYIvkKegbJcRS0C4AiUeLDhm4feN/fg6oSRV4m+qpeFug0bO0AqjjKaaYOMHS6FoyT0osoLECMg0NjFdSuOVAdp7eB3sZD3nTtTPsnayyj+3uip+ajNhahw== ian@DESKTOP-C07E16P";
     };
 
-    mkCommonModules = hostname: [
-      inputs.disko.nixosModules.disko
-      inputs.comin.nixosModules.comin
+    mkBaseModules = hostname: [
       inputs.agenix.nixosModules.default
-      ({...}: {
-        services.comin = {
-          enable = true;
-          hostname = hostname;
-          remotes = [{
-            name = "origin";
-            url = "https://github.com/imcdo/home-lab.git";
-            branches.main.name = "main";
-          }];
-          flakeSubdirectory = "./nix";
-        };
-      })
       inputs.vscode-server.nixosModules.default
       ({ config, pkgs, ... }: {
         services.vscode-server.enable = true;
+      })
+      ({ lib, ... }: {
+        networking.extraHosts = lib.mkAfter ''
+          192.168.0.100 think think.home.lan
+          192.168.0.101 chrome-a chrome-a.home.lan
+          192.168.0.102 chrome-b chrome-b.home.lan
+          192.168.0.103 chrome-c chrome-c.home.lan
+          192.168.0.104 busy-bee busy-bee.home.lan
+        '';
       })
       inputs.home-manager.nixosModules.home-manager
       {
@@ -102,9 +104,30 @@
           outputs.overlays.unstable-packages
         ];
       })
-      ./modules/k3s.nix
       ./modules/users.nix
     ];
+
+    mkServerModules = hostname:
+      (mkBaseModules hostname)
+      ++ [
+        inputs.disko.nixosModules.disko
+        inputs.comin.nixosModules.comin
+        ({...}: {
+          services.comin = {
+            enable = true;
+            hostname = hostname;
+            remotes = [{
+              name = "origin";
+              url = "https://github.com/imcdo/home-lab.git";
+              branches.main.name = "main";
+            }];
+            flakeSubdirectory = "./nix";
+          };
+        })
+        ./modules/k3s.nix
+      ];
+
+    mkWslModules = hostname: mkBaseModules hostname;
 
     machine = name: modules:
       nixpkgs.lib.nixosSystem {
@@ -114,13 +137,27 @@
         };
         modules =
           [
-            # Apply overlays to make unstable packages available as pkgs.unstable
             ./hosts/${name}/disk-config.nix
             ./hosts/${name}/hardware-configuration.nix
             ./hosts/${name}/configuration.nix
           ]
           ++ modules
-          ++ (mkCommonModules name);
+          ++ (mkServerModules name);
+      };
+
+    wslMachine = name: modules:
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs outputs;
+        };
+        modules =
+          [
+            nixos-wsl.nixosModules.default
+            ./hosts/${name}/configuration.nix
+          ]
+          ++ modules
+          ++ (mkWslModules name);
       };
   in {
     # Your custom packages
@@ -145,6 +182,7 @@
         ./modules/satisfactory-server.nix
         ./modules/vintage-story-server.nix
       ];
+      wsl = wslMachine "wsl" [];
     };
   };
 }

@@ -68,6 +68,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # Enable zsh system-wide so it's a valid login shell
+    programs.zsh.enable = true;
+
     # Create groups
     users.groups = {
       k3s = {};
@@ -81,6 +84,7 @@ in
     };
 
     # Main user (admin)
+    # packages are managed by home-manager (home.packages)
     users.users."ian" = mkIf cfg.mainUser.enable {
       isNormalUser = true;
       extraGroups = [
@@ -91,14 +95,13 @@ in
         "docker"
       ];
       description = "Administrator";
-      shell = pkgs.bash;
+      shell = pkgs.zsh;
       home = "/home/ian";
-      packages = cfg.mainUser.packages;
       openssh.authorizedKeys.keys = [ cfg.sshKey ];
       hashedPassword = "$y$j9T$9BdqgTuOcv0mD2QnhVpbn0$m6yMKdiA6s826YSDU8JR9hBiQBS2riTunsOrZVAPcp2";
     };
 
-    users.users.christian =  {
+    users.users.christian = {
       isNormalUser = true;
       extraGroups = [
         "wheel"
