@@ -125,7 +125,7 @@ in
       role = cfg.role;
       clusterInit = cfg.clusterInit;
       serverAddr = mkIf (cfg.serverAddr != null) cfg.serverAddr;
-      extraFlags = toString [
+      extraFlags = [
         "--write-kubeconfig-mode=640"
         "--write-kubeconfig-group=k3s"
         "--flannel-backend=none"

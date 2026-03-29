@@ -5,6 +5,22 @@ let
   wslNixosRebuild = pkgs.writeShellScriptBin "wsl-nixos-rebuild" ''
     exec sudo nixos-rebuild switch --flake /home/ian/home-lab/nix#wsl "$@"
   '';
+  wslKubeconfig = pkgs.writeShellScriptBin "wsl-kubeconfig" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    k3s_host="''${1:-think}"
+    target="''${2:-$HOME/.kube/config}"
+
+    mkdir -p "$(dirname "$target")"
+
+    ssh "ian@''${k3s_host}" "sudo cat /etc/rancher/k3s/k3s.yaml" \
+      | sed "s#127.0.0.1#''${k3s_host}#g" \
+      > "$target"
+
+    chmod 600 "$target"
+    echo "kubeconfig written to $target"
+  '';
 in {
   wsl = {
     enable = true;
@@ -32,6 +48,7 @@ in {
     nmap
     git
     wslNixosRebuild
+    wslKubeconfig
   ];
 
   programs.nix-ld = {
