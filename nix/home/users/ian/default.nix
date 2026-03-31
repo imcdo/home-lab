@@ -36,6 +36,7 @@
       btop
       iptables
       etcd
+      screen
       unixtools.ping
       unixtools.netstat
       python313Packages.uptime
