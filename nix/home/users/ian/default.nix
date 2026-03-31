@@ -3,11 +3,6 @@
 {
   programs.home-manager.enable = true;
 
-  user = {
-    full_name = "Ian McDonald";
-    username = "ian";
-  };
-
   home = {
     username = "ian";
     homeDirectory = "/home/ian";
