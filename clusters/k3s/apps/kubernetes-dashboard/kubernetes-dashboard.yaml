@@ -28,6 +28,21 @@ spec:
         name: kubernetes-dashboard
         namespace: kubernetes-dashboard
       interval: 12h
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: kubernetes-dashboard-kong
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/0/command
+                value:
+                  - /bin/sh
+                  - -ec
+                  - rm -rf /kong_prefix/sockets/* /kong_prefix/pids/*; exec /docker-entrypoint.sh kong docker-start
   values:
     web:
       serviceLabels:
