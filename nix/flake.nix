@@ -79,36 +79,20 @@
       defaultPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJwCoP+9JDU6mH4pZCsk/GlhDXiarbdyaakIB1DzLMRtiv79U/aTkTvgm/TTmeQLM0W3vHYsKDloNRhRK87UbN798aiYk1g6w51OL7ClxlGStpZoRtTAA+enG2g55Vhx7WUM0kKvYw44iSWH60NN+XCItdHrGB6hBNf9Q86h+fzv2U92PvZOEjdX2PaNZ/2RR3QA6kf1ra8Na5RdXu3wvAZx+qAzrPXP8TGShcMc1kdYFC/RPzkUrj0Y2il3LXO7gAo1fi+RyZi9y0vvK3YNDHqxVE+dmMNYz9Ipsy2QBHF7vowJajvJVEAn8DQDSeQqRWwVeQZPTywzZbG8Ng0HlNV1QjUQbh3ZB3lWUdu5RQqD+Tltzo6fWkkN49FiYse/zlrIiUSayvALcGxeyvKTa0udIO2mGZO94aY/pg5uhG4/dHNk3JWRI2QyE0RyxCBRn9YksMPXVgkQ/ARgIbqrNP22JLFeffeB+zfBQQiPGsfnqTr8RWTyzlkltom6Uh5dksn7WfnbTofQbMIw6bU9x15+tmoxgJm3QzTnandpVXOsxSx5M2NJyTYIvkKegbJcRS0C4AiUeLDhm4feN/fg6oSRV4m+qpeFug0bO0AqjjKaaYOMHS6FoyT0osoLECMg0NjFdSuOVAdp7eB3sZD3nTtTPsnayyj+3uip+ajNhahw== ian@DESKTOP-C07E16P";
     };
 
-    mkHomeUser = {
+    mkHomeManagerModules = {
+      hmModule,
       homeDirectory,
-      username ? "ian"
-    }: import ./home/users/ian {
-      inherit homeDirectory username;
-    };
-
-    mkNixosHomeManagerModules = homeDirectory: extraModules: [
-      inputs.home-manager.nixosModules.home-manager
+      username ? "ian",
+      extraModules ? []
+    }: [
+      hmModule
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory; };
+        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory username; };
         home-manager.users = {
-          ian = {
-            imports = [ (mkHomeUser { inherit homeDirectory; username = "ian"; }) ] ++ extraModules;
-          };
-        };
-      }
-    ];
-
-    mkDarwinHomeManagerModules = homeDirectory: extraModules: [
-      inputs.home-manager.darwinModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory; };
-        home-manager.users = {
-          ian = {
-            imports = [ (mkHomeUser { inherit homeDirectory; username = "ian"; }) ] ++ extraModules;
+          ${username} = {
+            imports = [ ./home/users/ian ] ++ extraModules;
           };
         };
       }
@@ -122,10 +106,10 @@
       ./home/modules/kitty.nix
     ];
 
-    mkBaseModules = { hostname, homeModules ? [] }: [
+    mkBaseModules = { homeModules ? [] }: [
       inputs.agenix.nixosModules.default
       inputs.vscode-server.nixosModules.default
-      ({ config, pkgs, ... }: {
+      ({ ... }: {
         services.vscode-server.enable = true;
       })
       ({ lib, ... }: {
@@ -137,7 +121,7 @@
           192.168.0.104 busy-bee busy-bee.home.lan
         '';
       })
-      ({ config, pkgs, ... }: {
+      ({ ... }: {
         nixpkgs.overlays = [ 
           outputs.overlays.additions
           outputs.overlays.modifications  
@@ -145,20 +129,30 @@
         ];
       })
       ./modules/users.nix
-    ] ++ mkNixosHomeManagerModules "/home/ian" homeModules;
+    ] ++ mkHomeManagerModules {
+      hmModule = inputs.home-manager.nixosModules.home-manager;
+      homeDirectory = "/home/ian";
+      username = "ian";
+      extraModules = homeModules;
+    };
 
-    mkDarwinModules = { hostname, homeModules ? [] }: [
-      ({ config, pkgs, ... }: {
+    mkDarwinModules = { homeModules ? [] }: [
+      ({ ... }: {
         nixpkgs.overlays = [ 
           outputs.overlays.additions
           outputs.overlays.modifications  
           outputs.overlays.unstable-packages
         ];
       })
-    ] ++ mkDarwinHomeManagerModules "/Users/ian" homeModules;
+    ] ++ mkHomeManagerModules {
+      hmModule = inputs.home-manager.darwinModules.home-manager;
+      homeDirectory = "/Users/ian";
+      username = "ian";
+      extraModules = homeModules;
+    };
 
     mkServerModules = hostname:
-      (mkBaseModules { inherit hostname; })
+      (mkBaseModules {})
       ++ [
         inputs.disko.nixosModules.disko
         inputs.comin.nixosModules.comin
@@ -177,9 +171,8 @@
         ./modules/k3s.nix
       ];
 
-    mkWslModules = hostname:
+    mkWslModules =
       mkBaseModules {
-        inherit hostname;
         homeModules = homeMachineModules;
       };
 
@@ -211,7 +204,7 @@
             ./hosts/${name}/configuration.nix
           ]
           ++ modules
-          ++ (mkWslModules name);
+          ++ mkWslModules;
       };
 
     darwinMachine = name:
@@ -225,7 +218,6 @@
             ./hosts/${name}/configuration.nix
           ]
           ++ mkDarwinModules {
-            hostname = name;
             homeModules = darwinHomeModules;
           };
       };
