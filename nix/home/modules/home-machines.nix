@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Shared Home Manager config for personal machines (macOS + WSL).
@@ -11,7 +11,8 @@
     enable = true;
     package = pkgs.vscode;
     mutableExtensionsDir = true;
-    extensions = with pkgs.vscode-extensions; [
+    extensions =
+      (with pkgs.vscode-extensions; [
       # Nix
       bbenoist.nix
       jnoortheen.nix-ide
@@ -29,13 +30,13 @@
       ms-dotnettools.csharp
       ms-dotnettools.csdevkit
 
-      # Godot
-      geequlim."godot-tools"
-
       # General quality-of-life
       editorconfig.editorconfig
       redhat.vscode-yaml
-    ];
+      ])
+      ++ lib.optionals (pkgs.vscode-extensions ? geequlim && pkgs.vscode-extensions.geequlim ? "godot-tools") [
+        pkgs.vscode-extensions.geequlim."godot-tools"
+      ];
 
     userSettings = {
       "editor.formatOnSave" = true;
