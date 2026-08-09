@@ -30,7 +30,7 @@
       ms-dotnettools.csdevkit
 
       # Godot
-      geequlim.godot-tools
+      geequlim."godot-tools"
 
       # General quality-of-life
       editorconfig.editorconfig
