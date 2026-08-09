@@ -26,7 +26,6 @@
 
   homebrew = {
     enable = true;
-    user = "ian";
 
     onActivation = {
       autoUpdate = true;
