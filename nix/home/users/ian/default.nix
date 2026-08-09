@@ -28,19 +28,22 @@
       k9s
       kubectl
       helm
-      docker
       wget
       fluxcd
       python3
       cloudflared
       btop
-      iptables
       etcd
       screen
+      python313Packages.uptime
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
+      docker
+      iptables
       unixtools.ping
       unixtools.netstat
-      python313Packages.uptime
-    ]  ++ (with pkgs.python313Packages; [
+    ])
+    ++ (with pkgs.python313Packages; [
       pip
       virtualenv
       pipx
