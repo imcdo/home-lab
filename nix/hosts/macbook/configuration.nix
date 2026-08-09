@@ -17,8 +17,6 @@
     shell = pkgs.zsh;
   };
 
-  system.primaryUser = "ian";
-
   environment.systemPackages = with pkgs; [
     git
     curl
@@ -28,6 +26,7 @@
 
   homebrew = {
     enable = true;
+    user = "ian";
 
     onActivation = {
       autoUpdate = true;

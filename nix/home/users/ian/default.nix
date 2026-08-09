@@ -1,10 +1,10 @@
-{ pkgs, lib, sshConfig, homeDirectory ? "/home/ian", ... }:
+{ pkgs, lib, sshConfig, homeDirectory ? "/home/ian", username ? "ian", ... }:
 
 {
   programs.home-manager.enable = true;
 
   home = {
-    username = "ian";
+    username = username;
     homeDirectory = homeDirectory;
     stateVersion = "23.11";
 
