@@ -12,7 +12,7 @@
     package = pkgs.vscode;
     mutableExtensionsDir = true;
 
-    profiles.default.userSettings = {
+    userSettings = {
       "editor.formatOnSave" = true;
       "editor.minimap.enabled" = false;
       "files.trimTrailingWhitespace" = true;
