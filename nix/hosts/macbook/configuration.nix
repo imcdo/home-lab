@@ -37,6 +37,7 @@
     casks = [
       "discord"
       "font-fira-code"
+      "godot"
     ];
   };
 }
