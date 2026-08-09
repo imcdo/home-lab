@@ -1,11 +1,11 @@
-{ pkgs, lib, sshConfig, ... }:
+{ pkgs, lib, sshConfig, homeDirectory ? "/home/ian", ... }:
 
 {
   programs.home-manager.enable = true;
 
   home = {
     username = "ian";
-    homeDirectory = "/home/ian";
+    homeDirectory = homeDirectory;
     stateVersion = "23.11";
 
     file.".ssh/authorized_keys" = {
@@ -58,7 +58,7 @@
     shellAliases = {
       ll = "ls -la";
       k = "kubectl";
-      update = "sudo nixos-rebuild switch";
+      update = if pkgs.stdenv.isDarwin then "sudo darwin-rebuild switch" else "sudo nixos-rebuild switch";
     };
     history.size = 10000000;
 

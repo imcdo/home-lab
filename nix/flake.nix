@@ -41,6 +41,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nix-darwin for macOS
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # NixOS WSL
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/release-24.11";
@@ -52,6 +58,7 @@
     self,
     nixpkgs,
     home-manager,
+    darwin,
     nixos-wsl,
     ...
   } @ inputs: let
@@ -72,7 +79,45 @@
       defaultPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJwCoP+9JDU6mH4pZCsk/GlhDXiarbdyaakIB1DzLMRtiv79U/aTkTvgm/TTmeQLM0W3vHYsKDloNRhRK87UbN798aiYk1g6w51OL7ClxlGStpZoRtTAA+enG2g55Vhx7WUM0kKvYw44iSWH60NN+XCItdHrGB6hBNf9Q86h+fzv2U92PvZOEjdX2PaNZ/2RR3QA6kf1ra8Na5RdXu3wvAZx+qAzrPXP8TGShcMc1kdYFC/RPzkUrj0Y2il3LXO7gAo1fi+RyZi9y0vvK3YNDHqxVE+dmMNYz9Ipsy2QBHF7vowJajvJVEAn8DQDSeQqRWwVeQZPTywzZbG8Ng0HlNV1QjUQbh3ZB3lWUdu5RQqD+Tltzo6fWkkN49FiYse/zlrIiUSayvALcGxeyvKTa0udIO2mGZO94aY/pg5uhG4/dHNk3JWRI2QyE0RyxCBRn9YksMPXVgkQ/ARgIbqrNP22JLFeffeB+zfBQQiPGsfnqTr8RWTyzlkltom6Uh5dksn7WfnbTofQbMIw6bU9x15+tmoxgJm3QzTnandpVXOsxSx5M2NJyTYIvkKegbJcRS0C4AiUeLDhm4feN/fg6oSRV4m+qpeFug0bO0AqjjKaaYOMHS6FoyT0osoLECMg0NjFdSuOVAdp7eB3sZD3nTtTPsnayyj+3uip+ajNhahw== ian@DESKTOP-C07E16P";
     };
 
-    mkBaseModules = hostname: [
+    mkHomeUser = homeDirectory: import ./home/users/ian { inherit homeDirectory; };
+
+    mkNixosHomeManagerModules = homeDirectory: extraModules: [
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory; };
+        home-manager.users = {
+          ian = {
+            imports = [ (mkHomeUser homeDirectory) ] ++ extraModules;
+          };
+        };
+      }
+    ];
+
+    mkDarwinHomeManagerModules = homeDirectory: extraModules: [
+      inputs.home-manager.darwinModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory; };
+        home-manager.users = {
+          ian = {
+            imports = [ (mkHomeUser homeDirectory) ] ++ extraModules;
+          };
+        };
+      }
+    ];
+
+    homeMachineModules = [
+      ./home/modules/home-machines.nix
+    ];
+
+    darwinHomeModules = homeMachineModules ++ [
+      ./home/modules/kitty.nix
+    ];
+
+    mkBaseModules = { hostname, homeModules ? [] }: [
       inputs.agenix.nixosModules.default
       inputs.vscode-server.nixosModules.default
       ({ config, pkgs, ... }: {
@@ -87,16 +132,6 @@
           192.168.0.104 busy-bee busy-bee.home.lan
         '';
       })
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        # Use the common home configurations from a separate file
-        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig; };
-        home-manager.users = {
-          ian = import ./home/users/ian;
-        };
-      }
       ({ config, pkgs, ... }: {
         nixpkgs.overlays = [ 
           outputs.overlays.additions
@@ -105,10 +140,20 @@
         ];
       })
       ./modules/users.nix
-    ];
+    ] ++ mkNixosHomeManagerModules "/home/ian" homeModules;
+
+    mkDarwinModules = { hostname, homeModules ? [] }: [
+      ({ config, pkgs, ... }: {
+        nixpkgs.overlays = [ 
+          outputs.overlays.additions
+          outputs.overlays.modifications  
+          outputs.overlays.unstable-packages
+        ];
+      })
+    ] ++ mkDarwinHomeManagerModules "/Users/ian" homeModules;
 
     mkServerModules = hostname:
-      (mkBaseModules hostname)
+      (mkBaseModules { inherit hostname; })
       ++ [
         inputs.disko.nixosModules.disko
         inputs.comin.nixosModules.comin
@@ -127,7 +172,11 @@
         ./modules/k3s.nix
       ];
 
-    mkWslModules = hostname: mkBaseModules hostname;
+    mkWslModules = hostname:
+      mkBaseModules {
+        inherit hostname;
+        homeModules = homeMachineModules;
+      };
 
     machine = name: modules:
       nixpkgs.lib.nixosSystem {
@@ -159,6 +208,22 @@
           ++ modules
           ++ (mkWslModules name);
       };
+
+    darwinMachine = name:
+      darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          inherit inputs outputs;
+        };
+        modules =
+          [
+            ./hosts/${name}/configuration.nix
+          ]
+          ++ mkDarwinModules {
+            hostname = name;
+            homeModules = darwinHomeModules;
+          };
+      };
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -183,6 +248,10 @@
         ./modules/vintage-story-server.nix
       ];
       wsl = wslMachine "wsl" [];
+    };
+
+    darwinConfigurations = {
+      macbook = darwinMachine "macbook";
     };
   };
 }
