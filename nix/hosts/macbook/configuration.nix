@@ -7,7 +7,9 @@
 
   time.timeZone = "America/Los_Angeles";
 
-  nix.enable = true;
+  # Determinate Nix manages the local Nix installation; keep nix-darwin from
+  # trying to re-install/manage it during activation.
+  nix.enable = false;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = 5;
 
