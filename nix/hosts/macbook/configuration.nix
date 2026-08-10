@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   networking.hostName = "macbook";
   networking.computerName = "macbook";
   networking.localHostName = "macbook";
@@ -10,7 +13,7 @@
   # Determinate Nix manages the local Nix installation; keep nix-darwin from
   # trying to re-install/manage it during activation.
   nix.enable = false;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = 5;
 
   programs.zsh.enable = true;
@@ -20,16 +23,17 @@
     shell = pkgs.zsh;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    let
-      name = lib.getName pkg;
-    in
-      builtins.elem name [
-        "vscode"
-        "vscode-extension-ms-python-python"
-        "vscode-extension-MS-python-vscode-pylance"
-      ]
-      || lib.hasPrefix "vscode-extension-ms-dotnettools-" name;
+  nixpkgs.config.allowUnfreePredicate = pkg: let
+    name = lib.getName pkg;
+  in
+    builtins.elem name [
+      "vscode"
+      "vscode-extension-ms-python-python"
+      "vscode-extension-MS-python-vscode-pylance"
+      "spotify"
+      "gitlab-runner"
+    ]
+    || lib.hasPrefix "vscode-extension-ms-dotnettools-" name;
 
   environment.systemPackages = with pkgs; [
     git

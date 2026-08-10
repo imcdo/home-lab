@@ -1,12 +1,15 @@
-{ pkgs, lib, sshConfig, homeDirectory ? "/home/ian", username ? "ian", ... }:
-
-let
+{
+  pkgs,
+  lib,
+  sshConfig,
+  homeDirectory ? "/home/ian",
+  username ? "ian",
+  ...
+}: let
   darwinRebuildWrapper = pkgs.writeShellScriptBin "darwin-rebuild" ''
     exec nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- "$@"
   '';
-in
-
-{
+in {
   programs.home-manager.enable = true;
 
   home = {
@@ -20,49 +23,59 @@ in
       '';
     };
 
-    packages = with pkgs; [
-      ripgrep
-      fd
-      tmux
-      bat
-      neovim
-      git
-      curl
-      wget
-      jq
-      tree
-      k9s
-      kubectl
-      wget
-      fluxcd
-      python3
-      cloudflared
-      btop
-      etcd
-      screen
-      python313Packages.uptime
-    ]
-    ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
-      helm
-      docker
-      iptables
-      unixtools.ping
-      unixtools.netstat
-    ])
-    ++ lib.optionals pkgs.stdenv.isDarwin [
-      darwinRebuildWrapper
-    ]
-    ++ (with pkgs.python313Packages; [
-      pip
-      virtualenv
-      pipx
-      requests
-    ]);
+    packages = with pkgs;
+      [
+        ripgrep
+        fd
+        tmux
+        bat
+        neovim
+        git
+        curl
+        wget
+        jq
+        tree
+        k9s
+        kubectl
+        wget
+        fluxcd
+        python3
+        cloudflared
+        btop
+        etcd
+        screen
+        python313Packages.uptime
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
+        helm
+        docker
+        iptables
+        unixtools.ping
+        unixtools.netstat
+      ])
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        darwinRebuildWrapper
+      ]
+      ++ (with pkgs.python313Packages; [
+        pip
+        virtualenv
+        pipx
+        requests
+      ]);
     sessionVariables = {
       EDITOR = "nvim";
     };
   };
 
+  programs.git = {
+    enable = true;
+    userName = "imcdo";
+    userEmail = "ian_mcdonald@rocketmail.com";
+    extraConfig = {
+      core.editor = "vim";
+      pull.rebase = "true";
+    };
+  };
 
   # Basic shell configuration
   programs.zsh = {
@@ -70,11 +83,15 @@ in
     shellAliases = {
       ll = "ls -la";
       k = "kubectl";
-      update = if pkgs.stdenv.isDarwin then "nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- switch --flake $HOME/git/home-lab/nix\#macbook" else "sudo nixos-rebuild switch";
+      update =
+        if pkgs.stdenv.isDarwin
+        then "nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- switch --flake $HOME/git/home-lab/nix\#macbook"
+        else "sudo nixos-rebuild switch";
     };
     history.size = 10000000;
 
-    oh-my-zsh = { # "ohMyZsh" without Home Manager
+    oh-my-zsh = {
+      # "ohMyZsh" without Home Manager
       enable = true;
       plugins = [
         "git"
@@ -86,7 +103,6 @@ in
         "kubectl"
         "kubectx"
         "pip"
-    
       ];
       theme = "simple";
     };

@@ -1,9 +1,9 @@
-{ pkgs, ... }:
-
-{
-  home.packages = [
-    pkgs.fira-code
-    pkgs.kitty
-    pkgs.rectangle
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    fira-code
+    kitty
+    rectangle
+    spotify
+    gitlab-runner
   ];
 }
