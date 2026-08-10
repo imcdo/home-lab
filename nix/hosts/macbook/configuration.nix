@@ -9,6 +9,7 @@
 
   nix.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  system.stateVersion = 5;
 
   programs.zsh.enable = true;
 
