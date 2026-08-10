@@ -1,5 +1,11 @@
 { pkgs, lib, sshConfig, homeDirectory ? "/home/ian", username ? "ian", ... }:
 
+let
+  darwinRebuildWrapper = pkgs.writeShellScriptBin "darwin-rebuild" ''
+    exec nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- "$@"
+  '';
+in
+
 {
   programs.home-manager.enable = true;
 
@@ -43,6 +49,9 @@
       unixtools.ping
       unixtools.netstat
     ])
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      darwinRebuildWrapper
+    ]
     ++ (with pkgs.python313Packages; [
       pip
       virtualenv
@@ -61,7 +70,7 @@
     shellAliases = {
       ll = "ls -la";
       k = "kubectl";
-      update = if pkgs.stdenv.isDarwin then "sudo nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- switch --flake $HOME/git/home-lab/nix\#macbook" else "sudo nixos-rebuild switch";
+      update = if pkgs.stdenv.isDarwin then "nix run github:LnL7/nix-darwin/nix-darwin-24.11\#darwin-rebuild -- switch --flake $HOME/git/home-lab/nix\#macbook" else "sudo nixos-rebuild switch";
     };
     history.size = 10000000;
 
