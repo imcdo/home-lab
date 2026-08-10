@@ -52,6 +52,12 @@
       url = "github:nix-community/NixOS-WSL/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Better macOS app launcher integration for Nix-installed GUI apps.
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -60,6 +66,7 @@
     home-manager,
     darwin,
     nixos-wsl,
+    mac-app-util,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -103,6 +110,7 @@
     ];
 
     darwinHomeModules = homeMachineModules ++ [
+      inputs.mac-app-util.homeManagerModules.default
       ./home/modules/kitty.nix
       ./home/modules/darwin-apps.nix
       ./home/modules/local-ai.nix
@@ -139,6 +147,7 @@
     };
 
     mkDarwinModules = { homeModules ? [] }: [
+      inputs.mac-app-util.darwinModules.default
       ({ ... }: {
         nixpkgs.overlays = [ 
           outputs.overlays.additions
