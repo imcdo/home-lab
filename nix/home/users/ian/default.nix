@@ -27,7 +27,6 @@
       tree
       k9s
       kubectl
-      helm
       wget
       fluxcd
       python3
@@ -38,6 +37,7 @@
       python313Packages.uptime
     ]
     ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
+      helm
       docker
       iptables
       unixtools.ping

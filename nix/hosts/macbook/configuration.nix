@@ -38,6 +38,10 @@
       upgrade = true;
     };
 
+    brews = [
+      "helm"
+    ];
+
     # Fallback for GUI apps that are better managed as macOS casks.
     casks = [
       "discord"
