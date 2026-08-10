@@ -25,7 +25,7 @@
       builtins.elem name [
         "vscode"
         "vscode-extension-ms-python-python"
-        "vscode-extension-ms-python-vscode-pylance"
+        "vscode-extension-MS-python-vscode-pylance"
       ]
       || lib.hasPrefix "vscode-extension-ms-dotnettools-" name;
 
