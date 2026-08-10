@@ -1,10 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -23,7 +25,7 @@
     };
   };
   # Pick only one of the below networking options.
-    networking = {
+  networking = {
     wireless = {
       enable = true;
       userControlled.enable = true;
@@ -44,7 +46,7 @@
       "192.168.0.1"
       "75.75.75.75"
     ];
-  };  
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -81,7 +83,6 @@
       nixPermissions.enable = true;
     };
   };
-
 
   # Set hostname
   networking.hostName = "chrome-c";
@@ -121,5 +122,5 @@
   system.stateVersion = "25.05";
 
   # Enable experimental Nix features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }

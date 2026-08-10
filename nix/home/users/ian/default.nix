@@ -25,6 +25,7 @@ in {
 
     packages = with pkgs;
       [
+        autojump
         ripgrep
         fd
         tmux
