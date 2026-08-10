@@ -18,9 +18,16 @@
     shell = pkgs.zsh;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "vscode"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    let
+      name = lib.getName pkg;
+    in
+      builtins.elem name [
+        "vscode"
+        "vscode-extension-ms-python-python"
+        "vscode-extension-ms-python-vscode-pylance"
+      ]
+      || lib.hasPrefix "vscode-extension-ms-dotnettools-" name;
 
   environment.systemPackages = with pkgs; [
     git
