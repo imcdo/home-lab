@@ -22,7 +22,6 @@
       ms-python.vscode-pylance
 
       # C / C++
-      ms-vscode.cpptools
       ms-vscode.cmake-tools
       twxs.cmake
 
@@ -34,6 +33,9 @@
       editorconfig.editorconfig
       redhat.vscode-yaml
       ])
+      ++ lib.optionals (!(pkgs.stdenv.hostPlatform.isDarwin && pkgs.stdenv.hostPlatform.isAarch64)) [
+        pkgs.vscode-extensions.ms-vscode.cpptools
+      ]
       ++ lib.optionals (pkgs.vscode-extensions ? geequlim && pkgs.vscode-extensions.geequlim ? "godot-tools") [
         pkgs.vscode-extensions.geequlim."godot-tools"
       ];
