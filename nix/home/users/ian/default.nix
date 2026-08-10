@@ -61,7 +61,7 @@
     shellAliases = {
       ll = "ls -la";
       k = "kubectl";
-      update = if pkgs.stdenv.isDarwin then "sudo darwin-rebuild switch" else "sudo nixos-rebuild switch";
+      update = if pkgs.stdenv.isDarwin then "sudo nix run github:LnL7/nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch --flake ~/Documents/home-lab/nix#macbook" else "sudo nixos-rebuild switch";
     };
     history.size = 10000000;
 
