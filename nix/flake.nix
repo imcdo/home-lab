@@ -105,6 +105,7 @@
     darwinHomeModules = homeMachineModules ++ [
       ./home/modules/kitty.nix
       ./home/modules/darwin-apps.nix
+      ./home/modules/local-ai.nix
     ];
 
     mkBaseModules = { homeModules ? [] }: [
