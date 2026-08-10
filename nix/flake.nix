@@ -104,6 +104,7 @@
 
     darwinHomeModules = homeMachineModules ++ [
       ./home/modules/kitty.nix
+      ./home/modules/darwin-apps.nix
     ];
 
     mkBaseModules = { homeModules ? [] }: [

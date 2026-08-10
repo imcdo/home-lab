@@ -54,7 +54,6 @@
     # Fallback for GUI apps that are better managed as macOS casks.
     casks = [
       "discord"
-      "font-fira-code"
       "godot"
       "lastpass"
     ];
