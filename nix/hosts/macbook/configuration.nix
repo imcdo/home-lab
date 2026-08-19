@@ -18,6 +18,25 @@
 
   programs.zsh.enable = true;
 
+  # Manage sleep behavior with pmset.
+  # - On AC: keep system awake for docked/lid-closed operation.
+  # - On battery: allow normal sleep to preserve battery life.
+  system.activationScripts.disableSleepOnAC.text = ''
+    # AC power profile
+    /usr/bin/pmset -c disablesleep 1
+    /usr/bin/pmset -c sleep 0
+    /usr/bin/pmset -c displaysleep 15
+    /usr/bin/pmset -c disksleep 10
+    /usr/bin/pmset -c lidwake 1
+
+    # Battery profile
+    /usr/bin/pmset -b disablesleep 0
+    /usr/bin/pmset -b sleep 15
+    /usr/bin/pmset -b displaysleep 5
+    /usr/bin/pmset -b disksleep 10
+    /usr/bin/pmset -b lidwake 1
+  '';
+
   users.users.ian = {
     home = "/Users/ian";
     shell = pkgs.zsh;
