@@ -6,7 +6,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixOS/nixpkgs/nixos-26.05";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -37,19 +37,19 @@
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # nix-darwin for macOS
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # NixOS WSL
     nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/release-24.11";
+      url = "github:nix-community/NixOS-WSL/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -90,16 +90,16 @@
       hmModule,
       homeDirectory,
       username ? "ian",
-      extraModules ? []
+      extraModules ? [],
     }: [
       hmModule
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit inputs outputs sshConfig homeDirectory username; };
+        home-manager.extraSpecialArgs = {inherit inputs outputs sshConfig homeDirectory username;};
         home-manager.users = {
           ${username} = {
-            imports = [ ./home/users/ian ] ++ extraModules;
+            imports = [./home/users/ian] ++ extraModules;
           };
         };
       }
@@ -109,58 +109,64 @@
       ./home/modules/home-machines.nix
     ];
 
-    darwinHomeModules = homeMachineModules ++ [
-      inputs.mac-app-util.homeManagerModules.default
-      ./home/modules/kitty.nix
-      ./home/modules/darwin-apps.nix
-      ./home/modules/local-ai.nix
-    ];
+    darwinHomeModules =
+      homeMachineModules
+      ++ [
+        inputs.mac-app-util.homeManagerModules.default
+        ./home/modules/kitty.nix
+        ./home/modules/darwin-apps.nix
+        ./home/modules/local-ai.nix
+      ];
 
-    mkBaseModules = { homeModules ? [] }: [
-      inputs.agenix.nixosModules.default
-      inputs.vscode-server.nixosModules.default
-      ({ ... }: {
-        services.vscode-server.enable = true;
-      })
-      ({ lib, ... }: {
-        networking.extraHosts = lib.mkAfter ''
-          192.168.0.100 think think.home.lan
-          192.168.0.101 chrome-a chrome-a.home.lan
-          192.168.0.102 chrome-b chrome-b.home.lan
-          192.168.0.103 chrome-c chrome-c.home.lan
-          192.168.0.104 busy-bee busy-bee.home.lan
-        '';
-      })
-      ({ ... }: {
-        nixpkgs.overlays = [ 
-          outputs.overlays.additions
-          outputs.overlays.modifications  
-          outputs.overlays.unstable-packages
-        ];
-      })
-      ./modules/users.nix
-    ] ++ mkHomeManagerModules {
-      hmModule = inputs.home-manager.nixosModules.home-manager;
-      homeDirectory = "/home/ian";
-      username = "ian";
-      extraModules = homeModules;
-    };
+    mkBaseModules = {homeModules ? []}:
+      [
+        inputs.agenix.nixosModules.default
+        inputs.vscode-server.nixosModules.default
+        ({...}: {
+          services.vscode-server.enable = true;
+        })
+        ({lib, ...}: {
+          networking.extraHosts = lib.mkAfter ''
+            192.168.0.100 think think.home.lan
+            192.168.0.101 chrome-a chrome-a.home.lan
+            192.168.0.102 chrome-b chrome-b.home.lan
+            192.168.0.103 chrome-c chrome-c.home.lan
+            192.168.0.104 busy-bee busy-bee.home.lan
+          '';
+        })
+        ({...}: {
+          nixpkgs.overlays = [
+            outputs.overlays.additions
+            outputs.overlays.modifications
+            outputs.overlays.unstable-packages
+          ];
+        })
+        ./modules/users.nix
+      ]
+      ++ mkHomeManagerModules {
+        hmModule = inputs.home-manager.nixosModules.home-manager;
+        homeDirectory = "/home/ian";
+        username = "ian";
+        extraModules = homeModules;
+      };
 
-    mkDarwinModules = { homeModules ? [] }: [
-      inputs.mac-app-util.darwinModules.default
-      ({ ... }: {
-        nixpkgs.overlays = [ 
-          outputs.overlays.additions
-          outputs.overlays.modifications  
-          outputs.overlays.unstable-packages
-        ];
-      })
-    ] ++ mkHomeManagerModules {
-      hmModule = inputs.home-manager.darwinModules.home-manager;
-      homeDirectory = "/Users/ian";
-      username = "ian";
-      extraModules = homeModules;
-    };
+    mkDarwinModules = {homeModules ? []}:
+      [
+        inputs.mac-app-util.darwinModules.default
+        ({...}: {
+          nixpkgs.overlays = [
+            outputs.overlays.additions
+            outputs.overlays.modifications
+            outputs.overlays.unstable-packages
+          ];
+        })
+      ]
+      ++ mkHomeManagerModules {
+        hmModule = inputs.home-manager.darwinModules.home-manager;
+        homeDirectory = "/Users/ian";
+        username = "ian";
+        extraModules = homeModules;
+      };
 
     mkServerModules = hostname:
       (mkBaseModules {})
@@ -171,21 +177,22 @@
           services.comin = {
             enable = true;
             hostname = hostname;
-            remotes = [{
-              name = "origin";
-              url = "https://github.com/imcdo/home-lab.git";
-              branches.main.name = "main";
-            }];
+            remotes = [
+              {
+                name = "origin";
+                url = "https://github.com/imcdo/home-lab.git";
+                branches.main.name = "main";
+              }
+            ];
             flakeSubdirectory = "./nix";
           };
         })
         ./modules/k3s.nix
       ];
 
-    mkWslModules =
-      mkBaseModules {
-        homeModules = homeMachineModules;
-      };
+    mkWslModules = mkBaseModules {
+      homeModules = homeMachineModules;
+    };
 
     machine = name: modules:
       nixpkgs.lib.nixosSystem {
@@ -230,7 +237,12 @@
           ]
           ++ mkDarwinModules {
             homeModules = darwinHomeModules;
-          };
+          }
+          ++ [
+            ({...}: {
+              system.primaryUser = "ian"; # Set the primary user here
+            })
+          ];
       };
   in {
     # Your custom packages

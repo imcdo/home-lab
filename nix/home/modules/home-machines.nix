@@ -1,37 +1,40 @@
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   # Shared Home Manager config for personal machines (macOS + WSL).
   home.packages = with pkgs; [
     alejandra
     nil
   ];
 
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     enable = true;
     package = pkgs.vscode;
     mutableExtensionsDir = true;
+
     extensions =
       (with pkgs.vscode-extensions; [
-      # Nix
-      bbenoist.nix
-      jnoortheen.nix-ide
+        # Nix
+        bbenoist.nix
+        jnoortheen.nix-ide
 
-      # Python
-      ms-python.python
-      ms-python.vscode-pylance
+        # Python
+        ms-python.python
+        ms-python.vscode-pylance
 
-      # C / C++
-      ms-vscode.cmake-tools
-      twxs.cmake
+        # C / C++
+        ms-vscode.cmake-tools
+        twxs.cmake
 
-      # C#
-      ms-dotnettools.csharp
-      ms-dotnettools.csdevkit
+        # C#
+        ms-dotnettools.csharp
+        ms-dotnettools.csdevkit
 
-      # General quality-of-life
-      editorconfig.editorconfig
-      redhat.vscode-yaml
+        # General quality-of-life
+        editorconfig.editorconfig
+        redhat.vscode-yaml
       ])
       ++ lib.optionals (!(pkgs.stdenv.hostPlatform.isDarwin && pkgs.stdenv.hostPlatform.isAarch64)) [
         pkgs.vscode-extensions.ms-vscode.cpptools
@@ -49,7 +52,7 @@
       "terminal.integrated.defaultProfile.osx" = "zsh";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
-      "nix.serverSettings.nil.formatting.command" = [ "alejandra" ];
+      "nix.serverSettings.nil.formatting.command" = ["alejandra"];
     };
   };
 }

@@ -45,6 +45,8 @@ in {
         btop
         etcd
         screen
+        opencode
+        opencode-desktop
         python313Packages.uptime
       ]
       ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
@@ -58,9 +60,7 @@ in {
         darwinRebuildWrapper
       ]
       ++ (with pkgs.python313Packages; [
-        pip
-        virtualenv
-        pipx
+        uv
         requests
       ]);
     sessionVariables = {
@@ -68,11 +68,16 @@ in {
     };
   };
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.git = {
     enable = true;
-    userName = "imcdo";
-    userEmail = "ian_mcdonald@rocketmail.com";
-    extraConfig = {
+    settings = {
+      user.name = "imcdo";
+      user.email = "ian_mcdonald@rocketmail.com";
       core.editor = "vim";
       pull.rebase = "true";
       url."git@github.com:".insteadOf = "https://github.com/";
@@ -93,7 +98,6 @@ in {
     history.size = 10000000;
 
     oh-my-zsh = {
-      # "ohMyZsh" without Home Manager
       enable = true;
       plugins = [
         "git"

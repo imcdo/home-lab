@@ -1,12 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.services.homelab.users;
   christianSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgGX3jzujNs6a192SuIC75KUOsyGfTN6elM2CXtcuimnqxOOa19Ect6RMb9OVdNi4BkzIHvYrES9WJDFqYpaDzpX6yYmBeg47aKps+n16+Y1PPqU9DkJDNBbqXHb3YsHFX6jq+Dc7ledUy64hyrQuhID/jajSC7ZSOiFLfzpX7yjWMXjgciyIfDgmi68ZAyzHUODN1/Ab5fV6HLTiNSJbTzMoVyvb9f86uCTdbCYEEk0pLCoRZoUaBMD+hvXu0NM8nclXT1bWe7nVSijaLeBOLAG8SGEun7LxN7jbVFmHtUDg/rT33ACmZHVHLNu6P47oJ4YyILuXzK7wWCZVb7vU4lP9HBbfgWCNRtiNokGzyi2Y5amGWqWvxPEKSRTXSTXie18XyjehFkLuKCjvLOykYGSQA7NM3mEDqBeiaKyB9Sl4kF9gEOWZ24mHQqIxbMFWY60IdnPqpF1KLy1oVg0KnxmC2LCbd4GSMm2vzgEPNM+F/nfVW4CcnLqiI1AmW3q9GX4BYDX9KcRYaqrzA2sNGlvCAnpr6XVP2OBBcTJCHCs4S3unUMiRlN7m1xWgAP2DNqjy5MObgau8JDjvV8Xcv7fLwDTKxPJTzZGGPazQq3brIbXGKhkQNXdghVe7Ld8OV5uzyEUQQoUiYER2Hh5ATukNkM3qvpAtjaGZcsHPt9Q== christian@grandlan.dev";
-in
-{
+in {
   options.services.homelab.users = {
     enable = mkEnableOption "Enable homelab user configuration";
 
@@ -25,27 +26,27 @@ in
 
       packages = mkOption {
         type = types.listOf types.package;
-        default = with pkgs; [
-          wget
-          fluxcd
-          kubectl
-          k9s
-          python3
-          btop
-          iptables
-          etcd
-          dig
-          tmux
-          cloudflared
-          unixtools.ping
-          unixtools.netstat
-          python313Packages.uptime
-        ] ++ (with pkgs.python313Packages; [
-          pip
-          virtualenv
-          pipx
-          requests
-        ]);
+        default = with pkgs;
+          [
+            wget
+            fluxcd
+            kubectl
+            k9s
+            python3
+            btop
+            iptables
+            etcd
+            dig
+            tmux
+            cloudflared
+            unixtools.ping
+            unixtools.netstat
+            python313Packages.uptime
+          ]
+          ++ (with pkgs.python313Packages; [
+            uv
+            requests
+          ]);
         description = "Additional packages for the main user";
       };
     };
@@ -80,7 +81,7 @@ in
 
     # Root user configuration
     users.users.root = {
-      openssh.authorizedKeys.keys = [ cfg.sshKey ];
+      openssh.authorizedKeys.keys = [cfg.sshKey];
     };
 
     # Main user (admin)
@@ -97,7 +98,7 @@ in
       description = "Administrator";
       shell = pkgs.zsh;
       home = "/home/ian";
-      openssh.authorizedKeys.keys = [ cfg.sshKey ];
+      openssh.authorizedKeys.keys = [cfg.sshKey];
       hashedPassword = "$y$j9T$9BdqgTuOcv0mD2QnhVpbn0$m6yMKdiA6s826YSDU8JR9hBiQBS2riTunsOrZVAPcp2";
     };
 
@@ -114,7 +115,7 @@ in
       shell = pkgs.bash;
       home = "/home/christian";
       packages = cfg.mainUser.packages;
-      openssh.authorizedKeys.keys = [ christianSshPublicKey ];
+      openssh.authorizedKeys.keys = [christianSshPublicKey];
     };
 
     # Admin user
@@ -135,11 +136,11 @@ in
     # Sudo configuration
     security.sudo.extraRules = [
       {
-        users = [ "ian" ];
+        users = ["ian"];
         commands = [
           {
             command = "ALL";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
         ];
       }
@@ -152,7 +153,5 @@ in
         chmod -R g+rwX /etc/nixos
       '';
     };
-
-
   };
 }

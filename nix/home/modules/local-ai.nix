@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   # Local AI tooling for personal macOS machines.
   home.packages =
     lib.optionals (pkgs ? ollama) [
@@ -10,7 +12,7 @@
       pkgs.aichat
     ]
     ++ lib.optionals (pkgs ? "llama-cpp") [
-      pkgs."llama-cpp"
+      pkgs.llama-cpp
     ];
 
   programs.zsh.shellAliases = {
