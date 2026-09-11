@@ -51,7 +51,7 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - zt-gateway.home.lan
-    - vaultwarden-zt.home.lan
+    - vaultwarden.zt
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -66,7 +66,7 @@ spec:
     - secretName: zt-edge-gateway-tls
       hosts:
         - zt-gateway.home.lan
-        - vaultwarden-zt.home.lan
+        - vaultwarden.zt
   rules:
     - host: zt-gateway.home.lan
       http:
@@ -99,7 +99,7 @@ spec:
                 name: vaultwarden
                 port:
                   number: 80
-    - host: vaultwarden-zt.home.lan
+    - host: vaultwarden.zt
       http:
         paths:
           - path: /

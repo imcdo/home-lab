@@ -23,7 +23,7 @@ spec:
       type: ClusterIP
 
     ingress:
-      enabled: true
+      enabled: false
       className: traefik
       host: vaultwarden.home.lan
       tls:
