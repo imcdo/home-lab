@@ -134,7 +134,7 @@ in
         "--service-cidr=10.43.0.0/16"
         "--disable=metrics-server"
         "--disable=servicelb"
-        # "--disable=traefik"
+        "--disable=traefik"
       ] ++ nodeLabelFlags;
     };
   };
