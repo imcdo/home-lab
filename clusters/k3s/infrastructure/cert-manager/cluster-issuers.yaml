@@ -1,0 +1,32 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-bootstrap
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: home-lan-root-ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  commonName: home-lan Root CA
+  secretName: home-lan-root-ca-key-pair
+  duration: 87600h
+  renewBefore: 720h
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  issuerRef:
+    name: selfsigned-bootstrap
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: home-lan-ca
+spec:
+  ca:
+    secretName: home-lan-root-ca-key-pair

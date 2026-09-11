@@ -4,6 +4,7 @@ resources:
 - gotk-components.yaml
 - gotk-sync.yaml
 - cilium-kustomization.yaml
+- cert-manager-kustomization.yaml
 - apps-kustomization.yaml
 - etcd-operator-kustomization.yaml
 - traefik-controller.yaml

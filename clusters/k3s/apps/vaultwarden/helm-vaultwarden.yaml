@@ -20,11 +20,16 @@ spec:
         namespace: vaultwarden
   values:
     service:
-      type: LoadBalancer
-      labels:
-        external-connection: "true"
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: "vaultwarden.home.lan"
+      type: ClusterIP
+
+    ingress:
+      enabled: true
+      className: traefik
+      host: vaultwarden.home.lan
+      tls:
+        - secretName: vaultwarden-tls
+          hosts:
+            - vaultwarden.home.lan
 
     persistence:
       enabled: true
