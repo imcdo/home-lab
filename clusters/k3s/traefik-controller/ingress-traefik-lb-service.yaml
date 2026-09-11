@@ -6,9 +6,10 @@ metadata:
   labels:
     external-connection: "true"
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: firefly.home.lan,vaultwarden.home.lan,pki.home.lan
+    external-dns.alpha.kubernetes.io/hostname: firefly.home.lan,vaultwarden.home.lan,pki.home.lan,zt-gateway.home.lan
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-ingress-nginx

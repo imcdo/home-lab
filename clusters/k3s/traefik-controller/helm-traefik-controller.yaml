@@ -32,6 +32,10 @@ spec:
       enabled: true
       isDefaultClass: true
       name: traefik
+    deployment:
+      kind: DaemonSet
+    nodeSelector:
+      node.homelab/zerotier: "true"
     providers:
       kubernetesIngress:
         enabled: true

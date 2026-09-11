@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.homelab.k3s;
-  zerotierEnabled = config.services.homelab.zerotier.enable or false;
+  zerotierEnabled = config.services.zerotierone.enable or false;
 
   nodeLabels = [
     "node.homelab/hostname=${config.networking.hostName}"

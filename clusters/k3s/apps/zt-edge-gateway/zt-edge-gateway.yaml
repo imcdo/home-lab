@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: edge-gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: edge-gateway
+spec:
+  type: ExternalName
+  externalName: kube-prometheus-stack-grafana.monitoring.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: edge-gateway
+spec:
+  type: ExternalName
+  externalName: kube-prometheus-stack-prometheus.monitoring.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pki
+  namespace: edge-gateway
+spec:
+  type: ExternalName
+  externalName: ca-publisher.cert-manager.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden
+  namespace: edge-gateway
+spec:
+  type: ExternalName
+  externalName: vaultwarden.vaultwarden.svc.cluster.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: zt-edge-gateway-tls
+  namespace: edge-gateway
+spec:
+  secretName: zt-edge-gateway-tls
+  issuerRef:
+    name: home-lan-ca
+    kind: ClusterIssuer
+  dnsNames:
+    - zt-gateway.home.lan
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zt-edge-gateway
+  namespace: edge-gateway
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - secretName: zt-edge-gateway-tls
+      hosts:
+        - zt-gateway.home.lan
+  rules:
+    - host: zt-gateway.home.lan
+      http:
+        paths:
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+          - path: /pki
+            pathType: Prefix
+            backend:
+              service:
+                name: pki
+                port:
+                  number: 80
+          - path: /vaultwarden
+            pathType: Prefix
+            backend:
+              service:
+                name: vaultwarden
+                port:
+                  number: 80

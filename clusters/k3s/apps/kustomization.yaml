@@ -7,5 +7,6 @@ resources:
   - coredns/
   - externaldns/
   - fireflyiii/
+  - zt-edge-gateway/
   - vaultwarden/
   - shared-helm.yaml
