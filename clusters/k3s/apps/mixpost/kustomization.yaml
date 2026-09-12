@@ -1,9 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: fireflyiii
+namespace: mixpost
 
 resources:
   - helm-repo.yaml
-  - helm-fireflyiii.yaml
+  - helm-mixpost.yaml
   - tls-certificate.yaml

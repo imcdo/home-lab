@@ -30,9 +30,15 @@ spec:
       ingress:
         enabled: true
         className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
         hosts:
           - firefly.home.lan
+        tls:
+          - secretName: firefly-tls
+            hosts:
+              - firefly.home.lan
       config:
         env:
-          APP_URL: http://firefly.home.lan
+          APP_URL: https://firefly.home.lan
           TRUSTED_PROXIES: "**"

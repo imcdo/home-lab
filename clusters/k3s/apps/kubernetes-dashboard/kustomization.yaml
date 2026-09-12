@@ -5,3 +5,5 @@ namespace: kubernetes-dashboard
 
 resources:
   - kubernetes-dashboard.yaml
+  - tls-certificate.yaml
+  - ingress.yaml

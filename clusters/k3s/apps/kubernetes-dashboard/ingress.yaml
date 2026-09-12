@@ -5,10 +5,16 @@ metadata:
   namespace: kubernetes-dashboard
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+    external-dns.alpha.kubernetes.io/hostname: "dashboard.home.lan"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
 spec:
+  ingressClassName: traefik
+  tls:
+    - secretName: kubernetes-dashboard-tls
+      hosts:
+        - dashboard.home.lan
   rules:
-    - host: k8s-dashboard.k3s.lan  # adjust this to your local DNS or /etc/hosts
+    - host: dashboard.home.lan
       http:
         paths:
           - path: /

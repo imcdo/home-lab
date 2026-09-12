@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mixpost-tls
+  namespace: mixpost
+spec:
+  secretName: mixpost-tls
+  issuerRef:
+    name: home-lan-ca
+    kind: ClusterIssuer
+  dnsNames:
+    - mixpost.home.lan
