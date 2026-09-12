@@ -79,6 +79,7 @@
       "discord"
       "godot"
       "lastpass"
+      "zerotier-one"
     ];
   };
 }
