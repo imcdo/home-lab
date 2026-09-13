@@ -10,7 +10,6 @@ metadata:
   namespace: mixpost
 spec:
   interval: 10m
-  suspend: true
   chart:
     spec:
       chart: app-template

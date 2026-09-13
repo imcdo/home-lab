@@ -4,13 +4,15 @@ metadata:
   name: kubernetes-dashboard
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+kind: GitRepository
 metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
 spec:
-  interval: 24h
-  url: https://kubernetes.github.io/dashboard/
+  interval: 30m
+  url: https://github.com/kubernetes-retired/dashboard
+  ref:
+    tag: kubernetes-dashboard-7.14.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -21,10 +23,9 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: kubernetes-dashboard
-      version: "7.13.0"
+      chart: ./charts/kubernetes-dashboard
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: kubernetes-dashboard
         namespace: kubernetes-dashboard
       interval: 12h
