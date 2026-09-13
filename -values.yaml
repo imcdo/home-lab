@@ -1,0 +1,38 @@
+controllers:
+  main:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/inovector/mixpost
+          tag: latest
+          pullPolicy: IfNotPresent
+        env:
+          APP_ENV: production
+          APP_URL: https://mixpost.home.lan
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 80
+ingress:
+  main:
+    enabled: true
+    className: traefik
+    hosts:
+      - host: mixpost.home.lan
+        paths:
+          - path: /
+            pathType: Prefix
+tls:
+  - hosts:
+      - mixpost.home.lan
+    secretName: mixpost-tls
+persistence:
+  storage:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    globalMounts:
+      - path: /var/www/html/storage
