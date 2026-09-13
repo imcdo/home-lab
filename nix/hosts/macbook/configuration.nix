@@ -42,6 +42,12 @@
     shell = pkgs.zsh;
   };
 
+  users.users.remote = {
+    home = "/Users/remote";
+    shell = pkgs.zsh;
+    description = "Remote User";
+  };
+
   nixpkgs.config.allowUnfreePredicate = pkg: let
     name = lib.getName pkg;
   in
@@ -51,6 +57,7 @@
       "vscode-extension-MS-python-vscode-pylance"
       "spotify"
       "gitlab-runner"
+      "steamcmd"
     ]
     || lib.hasPrefix "vscode-extension-ms-dotnettools-" name;
 
@@ -74,12 +81,27 @@
       "helm"
     ];
 
+    masApps = {
+      "Amphetamine" = 937984704;
+    };
+
     # Fallback for GUI apps that are better managed as macOS casks.
     casks = [
       "discord"
       "godot"
       "lastpass"
+      "steam"
+      "steamcmd"
       "zerotier-one"
     ];
+  };
+  system.activationScripts.configureZeroTier = {
+    text = ''
+      # Ensure ZeroTier service is running
+      /Applications/ZeroTier\ One.app/Contents/MacOS/ZeroTier\ One -daemon
+
+      # Join the specified ZeroTier network
+      /usr/local/bin/zerotier-cli join 0cccb752f74b06e5
+    '';
   };
 }

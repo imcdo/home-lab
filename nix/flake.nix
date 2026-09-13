@@ -166,7 +166,14 @@
         homeDirectory = "/Users/ian";
         username = "ian";
         extraModules = homeModules;
-      };
+      }
+      ++ [
+        {
+          home-manager.users.remote = {
+            imports = [./home/users/remote];
+          };
+        }
+      ];
 
     mkServerModules = hostname:
       (mkBaseModules {})
