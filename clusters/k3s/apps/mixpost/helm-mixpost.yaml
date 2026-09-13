@@ -40,6 +40,8 @@ spec:
       main:
         enabled: true
         className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
         hosts:
           - host: mixpost.home.lan
             paths:
