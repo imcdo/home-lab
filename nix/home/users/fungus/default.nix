@@ -36,15 +36,13 @@ in {
         tree
         k9s
         kubectl
-        fluxcd
         python3
-        cloudflared
         btop
         etcd
         screen
-        opencode
-        opencode-desktop
+        file
         python313Packages.uptime
+        foot.terminfo
       ]
       ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
         helm

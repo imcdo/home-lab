@@ -48,6 +48,7 @@ in {
         opencode
         opencode-desktop
         python313Packages.uptime
+        foot.terminfo
       ]
       ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
         helm
