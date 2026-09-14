@@ -9,7 +9,7 @@ godotPackages_4_6.godot.overrideAttrs (_old: {
     owner = "godotengine";
     repo = "godot";
     tag = "4.6.1-stable";
-    hash = "sha256-70r5RwHtLFGwDBiUuJab6C5OZHmkJ4QwVFnRX+J6PlI=";
+    hash = "sha256-C3AX+Gl6a3nX/k0TP6FYjYCK9AbKmtku+1ilYBu0R74=";
     leaveDotGit = true;
     postFetch = ''
       hash=$(git -C "$out" rev-parse HEAD)
