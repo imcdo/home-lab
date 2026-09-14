@@ -30,8 +30,9 @@
       tree
       btop
       python3
-      godot_4_6_1
-    ];
+    ] ++ lib.optionals pkgs.stdenv.isDarwin [
+        godot
+    ]; 
 
     sessionVariables = {
       EDITOR = "nvim";

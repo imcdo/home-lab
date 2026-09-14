@@ -58,7 +58,7 @@ in {
       ])
       ++ lib.optionals pkgs.stdenv.isDarwin [
         darwinRebuildWrapper
-        godot_4_6_1
+        godot
       ]
       ++ (with pkgs.python313Packages; [
         uv
