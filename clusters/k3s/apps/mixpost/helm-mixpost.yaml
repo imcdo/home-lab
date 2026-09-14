@@ -42,6 +42,7 @@ spec:
         className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+          external-dns.alpha.kubernetes.io/hostname: mixpost.home.lan
         hosts:
           - host: mixpost.home.lan
             paths:
