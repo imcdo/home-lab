@@ -24,8 +24,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/inovector/mixpost
-              tag: "2.6.0"
+              repository: inovector/mixpost
+              tag: "v2.6.0"
               pullPolicy: IfNotPresent
             env:
               APP_ENV: production
