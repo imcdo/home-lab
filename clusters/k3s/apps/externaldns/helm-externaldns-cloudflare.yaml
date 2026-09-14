@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-dns-cloudflare
+  namespace: network-dns
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: external-dns
+      version: "1.19.0"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: network-dns
+  values:
+    provider:
+      name: cloudflare
+    env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-api-token
+            key: api-token
+    sources:
+      - ingress
+      - service
+    domainFilters:
+      - grandlan.dev
+    policy: sync
+    registry: txt
+    txtOwnerId: home-lab
+    logLevel: info

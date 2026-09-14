@@ -1,0 +1,37 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pki-grandlan-dev
+  namespace: cert-manager
+spec:
+  secretName: pki-grandlan-dev-tls
+  issuerRef:
+    name: letsencrypt-prod-cloudflare
+    kind: ClusterIssuer
+  dnsNames:
+    - pki.grandlan.dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pki-grandlan-dev
+  namespace: cert-manager
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - secretName: pki-grandlan-dev-tls
+      hosts:
+        - pki.grandlan.dev
+  rules:
+    - host: pki.grandlan.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ca-publisher
+                port:
+                  number: 80
