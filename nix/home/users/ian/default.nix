@@ -48,7 +48,6 @@ in {
         opencode
         opencode-desktop
         python313Packages.uptime
-        godot_4_6_1
       ]
       ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
         helm
@@ -59,6 +58,7 @@ in {
       ])
       ++ lib.optionals pkgs.stdenv.isDarwin [
         darwinRebuildWrapper
+        godot_4_6_1
       ]
       ++ (with pkgs.python313Packages; [
         uv
