@@ -29,7 +29,7 @@ spec:
               pullPolicy: IfNotPresent
             env:
               APP_ENV: production
-              APP_URL: https://mixpost.home.lan
+              APP_URL: https://mixpost.grandlan.dev
     service:
       main:
         controller: main
@@ -42,9 +42,16 @@ spec:
         className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-          external-dns.alpha.kubernetes.io/hostname: mixpost.home.lan
+          external-dns.alpha.kubernetes.io/hostname: mixpost.home.lan,mixpost.grandlan.dev
         hosts:
           - host: mixpost.home.lan
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+          - host: mixpost.grandlan.dev
             paths:
               - path: /
                 pathType: Prefix
@@ -54,7 +61,10 @@ spec:
         tls:
           - hosts:
               - mixpost.home.lan
-            secretName: mixpost-tls
+            secretName: mixpost-home-lan-tls
+          - hosts:
+              - mixpost.grandlan.dev
+            secretName: mixpost-grandlan-dev-tls
     persistence:
       storage:
         enabled: true

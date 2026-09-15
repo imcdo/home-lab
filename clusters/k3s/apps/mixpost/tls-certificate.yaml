@@ -1,12 +1,25 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: mixpost-tls
+  name: mixpost-home-lan-tls
   namespace: mixpost
 spec:
-  secretName: mixpost-tls
+  secretName: mixpost-home-lan-tls
   issuerRef:
     name: home-lan-ca
     kind: ClusterIssuer
   dnsNames:
     - mixpost.home.lan
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mixpost-grandlan-dev-tls
+  namespace: mixpost
+spec:
+  secretName: mixpost-grandlan-dev-tls
+  issuerRef:
+    name: letsencrypt-prod-cloudflare
+    kind: ClusterIssuer
+  dnsNames:
+    - mixpost.grandlan.dev

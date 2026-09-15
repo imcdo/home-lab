@@ -4,17 +4,30 @@ metadata:
   name: monitoring-ingress
   namespace: monitoring
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "grafana.home.lan,prometheus.home.lan"
+    external-dns.alpha.kubernetes.io/hostname: "grafana.home.lan,grafana.grandlan.dev,prometheus.home.lan"
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: traefik
   tls:
-    - secretName: monitoring-tls
+    - secretName: monitoring-home-lan-tls
       hosts:
         - grafana.home.lan
         - prometheus.home.lan
+    - secretName: grafana-grandlan-dev-tls
+      hosts:
+        - grafana.grandlan.dev
   rules:
     - host: grafana.home.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-prometheus-stack-grafana
+                port:
+                  number: 80
+    - host: grafana.grandlan.dev
       http:
         paths:
           - path: /

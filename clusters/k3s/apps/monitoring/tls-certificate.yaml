@@ -1,13 +1,26 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: monitoring-tls
+  name: monitoring-home-lan-tls
   namespace: monitoring
 spec:
-  secretName: monitoring-tls
+  secretName: monitoring-home-lan-tls
   issuerRef:
     name: home-lan-ca
     kind: ClusterIssuer
   dnsNames:
     - grafana.home.lan
     - prometheus.home.lan
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-grandlan-dev-tls
+  namespace: monitoring
+spec:
+  secretName: grafana-grandlan-dev-tls
+  issuerRef:
+    name: letsencrypt-prod-cloudflare
+    kind: ClusterIssuer
+  dnsNames:
+    - grafana.grandlan.dev
