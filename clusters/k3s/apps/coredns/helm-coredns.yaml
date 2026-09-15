@@ -24,7 +24,7 @@ spec:
       external-connection: "true"
     service:
       annotations:
-        io.cilium/lb-ipam-ips: "192.168.6.0"
+        io.cilium/lb-ipam-ips: "192.168.6.10"
     ports:
       - name: dns
         protocol: UDP
