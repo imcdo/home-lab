@@ -6,7 +6,7 @@ metadata:
   labels:
     external-connection: "true"
   annotations:
-    io.cilium/lb-ipam-ips: "100.0.4.10"
+    io.cilium/lb-ipam-ips: "10.0.4.10"
     external-dns.alpha.kubernetes.io/hostname: firefly.home.lan,vaultwarden.home.lan,vaultwarden.zt,pki.home.lan,zt-gateway.home.lan,gateway.zt,grafana.home.lan,prometheus.home.lan
 spec:
   type: LoadBalancer
