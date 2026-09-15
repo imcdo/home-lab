@@ -6,3 +6,4 @@ namespace: network-dns
 resources:
   - helm-repo.yaml
   - helm-externaldns.yaml
+  - helm-externaldns-cloudflare.yaml
