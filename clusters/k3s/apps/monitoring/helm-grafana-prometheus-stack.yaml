@@ -25,15 +25,9 @@ spec:
         type: LoadBalancer
         labels:
           external-connection: "true"
-        annotations:
-          # io.cilium/lb-ipam-ips: "1"
-          external-dns.alpha.kubernetes.io/hostname: "grafana.home.lan,grafana.grandlan.dev"
 
     prometheus:
       service:
         type: LoadBalancer
         labels:
           external-connection: "true"
-        annotations:
-          # io.cilium/lb-ipam-ips: "1"
-          external-dns.alpha.kubernetes.io/hostname: "prometheus.home.lan"
