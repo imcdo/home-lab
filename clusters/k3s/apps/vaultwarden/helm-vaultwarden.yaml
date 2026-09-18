@@ -36,5 +36,5 @@ spec:
       size: 5Gi
 
     vaultwarden:
-      domain: "https://vaultwarden.home.lan"
+      domain: "https://vaultwarden.grandlan.dev"
       allowSignups: true
