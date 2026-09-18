@@ -21,6 +21,15 @@ spec:
   values:
     controllers:
       main:
+        initContainers:
+          wait-for-mysql:
+            image:
+              repository: busybox
+              tag: "1.36"
+            command:
+              - sh
+              - -c
+              - until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done
         containers:
           app:
             image:

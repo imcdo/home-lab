@@ -46,7 +46,7 @@ spec:
               command:
                 - sh
                 - -c
-                - mysqladmin ping -h 127.0.0.1 --silent
+                - mariadb-admin ping -h 127.0.0.1 --silent
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
@@ -55,7 +55,7 @@ spec:
               command:
                 - sh
                 - -c
-                - mysqladmin ping -h 127.0.0.1 --silent
+                - mariadb-admin ping -h 127.0.0.1 --silent
             initialDelaySeconds: 30
             periodSeconds: 20
             timeoutSeconds: 5
